@@ -1,9 +1,8 @@
-import { FormControl, FormLabel, TabPanel, Input, FormErrorMessage } from '@chakra-ui/react'
+import { FormLabel, Box } from '@chakra-ui/react'
 import workoutNamesListSelect from '../../workoutNames.js'
 import AsyncSelect from 'react-select/async'
-const workoutNames = ["arm", "leg", "back"]
-const Search = ({ onSetSearchFields }) => {
 
+const Search = ({ onSetSearchFields }) => {
 
   const handleChange = (search) => {
     onSetSearchFields({ name: search.value })
@@ -18,9 +17,8 @@ const Search = ({ onSetSearchFields }) => {
     }, 1000)
   }
 
-
   return (
-    <TabPanel>
+    <Box>
         <FormLabel htmlFor="query">Name</FormLabel>
         <AsyncSelect
           id="query"
@@ -28,7 +26,7 @@ const Search = ({ onSetSearchFields }) => {
           onChange={handleChange}
           loadOptions={loadOptions}
         />
-    </TabPanel>
+    </Box>
   )
 }
 

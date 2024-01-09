@@ -1,6 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 import Select from 'react-select'
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Card, CardBody, CardHeader, Heading, Image, ListItem, OrderedList, Text, VStack } from '@chakra-ui/react'
 
 const Workout = ({
                      _id,
@@ -31,53 +32,43 @@ const Workout = ({
     if (!image) return
 
     return (
-        <section className="card">
-            <div className="card-body text-capitalize">
-                <h4 className="card-title">
-                    {name || WorkOut }
-                </h4>
-                <p>
-                    {id}
-                </p>
-                <div>
-                    <h4>Target Muscle: {target}</h4>
-                </div>
-                <div>
-                    <h5>Level: {level}</h5>
-                </div>
-                <div className="text-center">
-                    <img src={image} alt="gif"/>
-                </div>
-                <div>
-                    { !!description && description }
-                </div>
-                <div>
-                    <button onClick={()=>setShowInstructions(!showInstructions)}>{showInstructions ? "Hide" : "Show" } Instructions</button>
-                  {
-                    showInstructions &&
-                    <ol>
-                      {instructions.map((instruction, index) => <li key={index}>{index + 1}: {instruction}</li>)}
-                    </ol>
-                  }
+        <Card borderRadius="10px" boxShadow="dark-lg" width="80%" maxWidth="650px">
+          <VStack>
+            <CardHeader>
+              <Heading>{name || WorkOut }</Heading>
+              <Text>Target Muscle: {target}</Text>
+              <Text>Level: {level}</Text>
+            </CardHeader>
 
-                </div>
-                <Select
-                    label="Change Level"
-                    htmlFor="level"
-                    options={[
-                        { label: "Beginner", value: "1"} ,
-                        { label: "Intermediate", value: "2"} ,
-                        { label: "Expert", value: "3"}
-                    ]}
-                    onChange={(e)=>setWorkoutLevel(e.value)}
-                >
+            <CardBody>
+              <Image src={image} alt="gif" borderRadius="10px" width="100%"/>
 
-                </Select>
-            </div>
+              <Text>{description}</Text>
+              <Accordion allowToggle>
+                <AccordionItem>
+                  <AccordionButton>
+                    <Box>
+                      Detailed Instructions
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
 
+                  <AccordionPanel>
 
+                    <OrderedList>
+                      {instructions.map((instruction, index) =>
+                        <ListItem key={index}>{instruction}</ListItem>
+                      )}
+                    </OrderedList>
 
-        </section>
+                  </AccordionPanel>
+
+                </AccordionItem>
+              </Accordion>
+            </CardBody>
+          </VStack>
+
+        </Card>
     );
 };
 

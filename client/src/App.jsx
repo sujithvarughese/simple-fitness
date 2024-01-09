@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import FindWorkouts from './components/FindWorkouts.jsx'
 import Workout from './components/Workout.jsx'
 import axios from 'axios'
+import { VStack } from '@chakra-ui/react'
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
     setResults([])
   }
   const onSetSearchFields = searchFields => setValues(searchFields)
-  const fetchWorkout = async () => {
+  const fetchWorkouts = async () => {
     if (Object.keys(values).length === 0) {
       return
     }
@@ -33,21 +34,25 @@ function App() {
     if (values === null) {
       return
     }
-    fetchWorkout()
+    fetchWorkouts()
   }, [values])
 
   return (
-    <>
+    <VStack maxWidth="1280px" minHeight="100vh" backgroundColor="antiquewhite">
+
       <FindWorkouts
         onSetSearchFields={onSetSearchFields}
         clear={clear}
       />
-      {
-        results?.map((result, index) =>
-          <Workout key={index} { ...result }/>
-        )
-      }
-    </>
+      <VStack>
+        {
+          results?.map((result, index) =>
+            <Workout key={index} { ...result }/>
+          )
+        }
+      </VStack>
+
+    </VStack>
   )
 }
 

@@ -1,4 +1,4 @@
-import { TabPanel,  VStack, FormControl, FormLabel } from '@chakra-ui/react'
+import {  VStack, FormControl, FormLabel, Box } from '@chakra-ui/react'
 import { bodyPartsListSelect, equipmentListSelect, levelListSelect } from '../data.js'
 import Select from 'react-select'
 import { useEffect, useState } from 'react'
@@ -15,7 +15,7 @@ const Browse = ({ onSetSearchFields }) => {
   }, [values])
 
   return (
-    <TabPanel>
+    <Box>
         <VStack>
           <FormControl>
             <FormLabel htmlFor="bodyPart">Target Body Part</FormLabel>
@@ -51,7 +51,7 @@ const Browse = ({ onSetSearchFields }) => {
           </FormControl>
         </VStack>
 
-    </TabPanel>
+    </Box>
   )
 }
 
