@@ -59,14 +59,12 @@ const getWorkoutsFromDB = async (req, res) => {
     let workouts = []
     try {
         await db.collection("workout")
-            .find({ $and: [req.query] })
-            .limit(50)
-            .sort({ name: 1 })
+            .find(req.query)
+            .limit(10)
             .forEach(workout => workouts.push(workout))
     } catch (error) {
         throw new Error(error)
     }
-
 
     res.send({
         msg: "success",

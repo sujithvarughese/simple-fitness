@@ -1,42 +1,33 @@
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
 import { FormControl, FormLabel, TabPanel, Input, FormErrorMessage } from '@chakra-ui/react'
-
+import workoutNamesListSelect from '../../workoutNames.js'
+import AsyncSelect from 'react-select/async'
 const workoutNames = ["arm", "leg", "back"]
-const Search = () => {
+const Search = ({ onSetSearchFields }) => {
 
-  const handleSubmit = values => {
-    console.log(values)
+
+  const handleChange = (search) => {
+    onSetSearchFields({ name: search.value })
   }
 
-  const formik = useFormik({
-    initialValues: {
-      query: ""
-    },
-    onSubmit: (values) => {
-      handleSubmit(values)
-      formik.resetForm()
-    },
-    validationSchema: Yup.object({
-      query: Yup.string().required("Required"),
-    })
-  })
+  const loadOptions = (query, callback) => {
+    setTimeout(() => {
+      const filteredWorkouts = workoutNamesListSelect.filter(workout => {
+        return workout.label.toLowerCase().includes(query.toLowerCase())
+      })
+      callback(filteredWorkouts)
+    }, 1000)
+  }
 
-  const queriedWorkoutNames = workoutNames.filter(name => {
-    return 	name.toLowerCase().includes(formik.values.query.toLowerCase())
-  })
 
   return (
     <TabPanel>
-      <FormControl isInvalid={formik.errors.query && formik.touched.query}>
-        <FormLabel htmlFor="firstName">Name</FormLabel>
-        <Input
-          id="firstName"
-          name="firstName"
-          {...formik.getFieldProps("firstName")}
+        <FormLabel htmlFor="query">Name</FormLabel>
+        <AsyncSelect
+          id="query"
+          name="query"
+          onChange={handleChange}
+          loadOptions={loadOptions}
         />
-        <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>
-      </FormControl>
     </TabPanel>
   )
 }

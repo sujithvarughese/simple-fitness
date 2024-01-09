@@ -1,33 +1,21 @@
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { TabPanel,  VStack, FormControl, FormLabel, Select, Button } from '@chakra-ui/react'
+import { TabPanel,  VStack, FormControl, FormLabel } from '@chakra-ui/react'
 import { bodyPartsListSelect, equipmentListSelect, levelListSelect } from '../data.js'
-const Browse = () => {
+import Select from 'react-select'
+import { useEffect, useState } from 'react'
 
-  const handleSubmit = values => {
-    console.log(values)
+const Browse = ({ onSetSearchFields }) => {
+
+  const [values, setValues] = useState({})
+
+  const handleChange = (value, action) => {
+    setValues({ ...values, [action.name]: value.value })
   }
-
-  const formik = useFormik({
-    initialValues: {
-      bodyPart: "",
-      compoundBodyPart: "",
-      equipment: "",
-      level: ""
-    },
-    onSubmit: (values) => {
-      handleSubmit(values)
-      formik.resetForm()
-    },
-    validationSchema: Yup.object({
-      bodyPart: Yup.string().required("Required"),
-      equipment: Yup.string().required("Required"),
-    })
-  })
+  useEffect(() => {
+    onSetSearchFields(values)
+  }, [values])
 
   return (
     <TabPanel>
-      <form>
         <VStack>
           <FormControl>
             <FormLabel htmlFor="bodyPart">Target Body Part</FormLabel>
@@ -35,18 +23,9 @@ const Browse = () => {
               name="bodyPart"
               id="bodyPart"
               type="text"
-              onBlur={formik.handleBlur}
-              value={formik.values.bodyPart}
-              onChange={formik.handleChange}
-            >
-              {
-                bodyPartsListSelect.map((bodyPart, index) => {
-                  return (
-                    <option key={index} value={bodyPart.value}>{bodyPart.label}</option>
-                  )
-                })
-              }
-            </Select>
+              onChange={handleChange}
+              options={bodyPartsListSelect}
+            />
           </FormControl>
 
           <FormControl>
@@ -55,18 +34,9 @@ const Browse = () => {
               name="equipment"
               id="equipment"
               type="text"
-              onBlur={formik.handleBlur}
-              value={formik.values.equipment}
-              onChange={formik.handleChange}
-            >
-              {
-                equipmentListSelect.map((equipment, index) => {
-                  return (
-                    <option key={index} value={equipment.value}>{equipment.label}</option>
-                  )
-                })
-              }
-            </Select>
+              onChange={handleChange}
+              options={equipmentListSelect}
+            />
           </FormControl>
 
           <FormControl>
@@ -75,22 +45,11 @@ const Browse = () => {
               name="level"
               id="level"
               type="text"
-              onBlur={formik.handleBlur}
-              value={formik.values.level}
-              onChange={formik.handleChange}
-            >
-              {
-                levelListSelect?.map((level, index) => {
-                  return (
-                    <option key={index} value={level.value}>{level.label}</option>
-                  )
-                })
-              }
-            </Select>
+              onChange={handleChange}
+              options={levelListSelect}
+            />
           </FormControl>
-          <Button type="submit">Submit</Button>
         </VStack>
-      </form>
 
     </TabPanel>
   )
