@@ -6,14 +6,11 @@ import connect from '../utils/connect.js'
 import Error from './Error.jsx'
 import { Box, Card, Container, Heading, Image, SimpleGrid, Text, VStack } from '@chakra-ui/react'
 import smallStepsBannerImg from "../assets/images/small-steps-banner.jpeg"
-import smallStepsBannerFullImg from "../assets/images/small-steps-banner-full.jpeg"
 import weightsBg from "../assets/images/weights-bg.jpeg"
 import dumbbellBg from "../assets/images/dumbbell-bg.jpeg"
 import fitnessEquipBg from "../assets/images/fitness-equip-bg.jpeg"
-import smallStepsBg from "../assets/images/small-steps-bg.jpeg"
 import fitnessBg from "../assets/images/fitness-bg.jpeg"
-import fitnessBgFull from "../assets/images/fitness-bg-full.jpeg"
-import fitnessBgFinal from "../assets/images/fitness-bg-final.jpeg"
+
 const Fitness = () => {
 
   const { user } = useGlobalContext()
@@ -73,7 +70,7 @@ const Fitness = () => {
         width="100%"
         minHeight="100vh"
         height="100%"
-        bgImage={fitnessBgFinal}
+        bgImage={fitnessBg}
         bgSize="contain"
       >
         <Card
