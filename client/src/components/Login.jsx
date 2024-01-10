@@ -1,7 +1,9 @@
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { Box, Button, Container, FormControl, FormErrorMessage, FormLabel, Heading, HStack, Input, InputGroup, Text, VStack } from '@chakra-ui/react'
+
 const Login = () => {
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -56,8 +58,8 @@ const Login = () => {
             width="200px"
           >Log In
           </Button>
-
         </HStack>
+
       </form>
     </Box>
   )

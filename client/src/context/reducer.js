@@ -4,7 +4,8 @@ import {
 	LOGIN_USER,
 	LOGOUT_USER,
 	SET_IS_LOADING,
-	SET_AUTH_STATE
+	SET_AUTH_STATE,
+	SHOW_REGISTER_MODAL
 } from "./actions.js";
 
 const reducer = (state, action) => {
@@ -36,6 +37,12 @@ const reducer = (state, action) => {
 		return {
 			...state,
 			authState: action.payload.authState
+		}
+	}
+	if (action.type === SHOW_REGISTER_MODAL) {
+		return {
+			...state,
+			showRegisterModal: !state.showRegisterModal
 		}
 	}
 }

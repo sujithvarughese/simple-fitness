@@ -3,11 +3,15 @@ import FindWorkouts from './components/FindWorkouts.jsx'
 import Workout from './components/Workout.jsx'
 import Navbar from './components/Navbar.jsx'
 import WorkoutList from './components/WorkoutList.jsx'
+import Register from './components/Register.jsx'
 import axios from 'axios'
 import { VStack, Container, Text, SimpleGrid } from '@chakra-ui/react'
+import { useAuthContext } from './context/AuthContext.jsx'
 
 
 function App() {
+
+  const { showRegisterModal } = useAuthContext()
 
   const [values, setValues] = useState({})
   const [results, setResults] = useState([])
@@ -41,6 +45,7 @@ function App() {
 
   return (
     <SimpleGrid>
+      {showRegisterModal && <Register />}
       <Navbar />
       <FindWorkouts
         onSetSearchFields={onSetSearchFields}

@@ -7,14 +7,16 @@ import {
 	LOGIN_USER,
 	LOGOUT_USER,
 	SET_IS_LOADING,
-	SET_AUTH_STATE
+	SET_AUTH_STATE,
+	SHOW_REGISTER_MODAL
 } from "./actions.js";
 
 const initialState = {
 	user: null,
 	isLoading: false,
 	authState: "",
-	favorites: []
+	favorites: [],
+	showRegisterModal: false
 }
 
 const AuthContext = createContext()
@@ -36,7 +38,13 @@ const AuthProvider = ({ children }) => {
 		} catch (error) {
 			console.log(error);
 		}
+	}
 
+	const setShowRegisterModal = () => {
+		console.log("showing modal...")
+		dispatch({
+			type: SHOW_REGISTER_MODAL
+		})
 	}
 	const login = async (credentials) => {
 		try {
@@ -77,7 +85,8 @@ const AuthProvider = ({ children }) => {
 				login,
 				logout,
 				setIsLoading,
-				setAuthState
+				setAuthState,
+				setShowRegisterModal
 			}
 		}>
 			{ children }
