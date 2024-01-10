@@ -1,8 +1,8 @@
 import { Flex, Heading, Box, Button, Text, Spacer, HStack } from '@chakra-ui/react'
 import Login from './Login.jsx'
-import { useAuthContext } from '../context/AuthContext.jsx'
+import { useGlobalContext } from '../context/GlobalContext.jsx'
 const Navbar = () => {
-  const { user, setShowRegisterModal, logout } = useAuthContext()
+  const { user, setShowRegisterModal, logout } = useGlobalContext()
   return (
     <HStack as="nav"
             p="10px"

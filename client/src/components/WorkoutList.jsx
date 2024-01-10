@@ -6,8 +6,8 @@ const WorkoutList = ({ workouts }) => {
   return (
     <VStack>
       {
-        workouts?.map((result, index) =>
-          <Workout key={index} { ...result }/>
+        workouts?.map(workout =>
+          <Workout key={workout.id} { ...workout }/>
         )
       }
     </VStack>

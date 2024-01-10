@@ -6,12 +6,13 @@ import WorkoutList from './components/WorkoutList.jsx'
 import Register from './components/Register.jsx'
 import axios from 'axios'
 import { VStack, Container, Text, SimpleGrid } from '@chakra-ui/react'
-import { useAuthContext } from './context/AuthContext.jsx'
+import { useGlobalContext } from './context/GlobalContext.jsx'
+import connect from './utils/connect.js'
 
 
 function App() {
 
-  const { showRegisterModal } = useAuthContext()
+  const { showRegisterModal } = useGlobalContext()
 
   const [values, setValues] = useState({})
   const [results, setResults] = useState([])
@@ -26,7 +27,7 @@ function App() {
       return
     }
     try {
-      const response = await axios(("http://localhost:8800/api/v1/workouts"), {
+      const response = await connect("/workouts", {
         params: {  ...values }
       })
       const { workouts } = response.data

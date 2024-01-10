@@ -1,11 +1,11 @@
 import { Button, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, VStack } from '@chakra-ui/react'
-import { useAuthContext } from '../context/AuthContext.jsx'
+import { useGlobalContext } from '../context/GlobalContext.jsx'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 const Register = () => {
 
-  const { showRegisterModal, setShowRegisterModal, register } = useAuthContext()
+  const { showRegisterModal, setShowRegisterModal, register } = useGlobalContext()
 
   const formik = useFormik({
     initialValues: {

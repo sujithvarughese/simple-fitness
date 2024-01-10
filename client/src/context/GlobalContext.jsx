@@ -1,14 +1,14 @@
 import { createContext, useContext, useReducer } from "react";
 import reducer from "./reducer.js";
 
-
 import {
 	REGISTER_USER,
 	LOGIN_USER,
 	LOGOUT_USER,
 	SET_IS_LOADING,
 	SET_AUTH_STATE,
-	SHOW_REGISTER_MODAL
+	SHOW_REGISTER_MODAL,
+	SET_FAVORITES
 } from "./actions.js";
 import connect from '../utils/connect.js'
 
@@ -20,9 +20,9 @@ const initialState = {
 	showRegisterModal: false
 }
 
-const AuthContext = createContext()
+const GlobalContext = createContext()
 
-const AuthProvider = ({ children }) => {
+const GlobalProvider = ({ children }) => {
 
 	const [state, dispatch] = useReducer(reducer, initialState)
 
@@ -77,8 +77,15 @@ const AuthProvider = ({ children }) => {
 		})
 	}
 
+	const setFavorites = (favorites) => {
+		dispatch({
+			type: SET_FAVORITES,
+			payload: { favorites: favorites }
+		})
+	}
+
 	return (
-		<AuthContext.Provider value={
+		<GlobalContext.Provider value={
 			{
 				...state,
 				register,
@@ -86,14 +93,15 @@ const AuthProvider = ({ children }) => {
 				logout,
 				setIsLoading,
 				setAuthState,
-				setShowRegisterModal
+				setShowRegisterModal,
+				setFavorites
 			}
 		}>
 			{ children }
-		</AuthContext.Provider>
+		</GlobalContext.Provider>
 	)
 }
 
-const useAuthContext = () => useContext(AuthContext)
+const useGlobalContext = () => useContext(GlobalContext)
 
-export { AuthProvider, useAuthContext, initialState }
+export { GlobalProvider, useGlobalContext, initialState }

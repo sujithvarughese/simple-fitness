@@ -1,17 +1,20 @@
 import connect from '../utils/connect.js'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Box } from '@chakra-ui/react'
-import { useAuthContext } from '../context/AuthContext.jsx'
+import { useGlobalContext } from '../context/GlobalContext.jsx'
 import WorkoutList from './WorkoutList.jsx'
+import Select from 'react-select'
+import { bodyPartsListSelect } from '../data.js'
 
-const UserDashboard = ({ onSetSearchFields }) => {
+const UserDashboard = () => {
 
-  const { favorites } = useAuthContext()
+  const { favorites } = useGlobalContext()
 
 
   return (
     <Box>
-      <WorkoutList workouts={favorites}/>
+
+      <WorkoutList workouts={favorites} />
     </Box>
   )
 }

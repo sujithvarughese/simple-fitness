@@ -8,13 +8,18 @@ let db
 const toggleFavorites = async (req, res) => {
     try {
         const user = await User.findById(req.user.userID)
-        const favorites = [...user.favorites]
-        const filteredFavorites = favorites.filter(workout => workout !== req.body)
+        const { favorites } = user
+        const filteredFavorites = favorites.filter(workout => workout.toString() !== req.body.id)
         if (filteredFavorites.length === favorites.length) {
-            filteredFavorites.push(req.body)
+            filteredFavorites.push(req.body.id)
         }
         await User.findByIdAndUpdate(req.user.userID, { favorites: filteredFavorites })
-        res.send({ msg: "success" })
+        const response = await User.find({ _id: req.user.userID }).select({ favorites: 1 }).populate("favorites")
+        const updatedFavorites = [...response[0].favorites]
+        res.send({
+            msg: "success",
+            favorites: updatedFavorites
+        })
     } catch (error) {
         throw new Error(error)
     }

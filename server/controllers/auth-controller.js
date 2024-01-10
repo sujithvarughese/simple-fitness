@@ -29,7 +29,7 @@ const register = async (req, res) => {
 	const token = createJWT({ payload: userInfo });
 	// create cookie in the response, where we attach token
 	attachCookies({ res, token });
-
+	console.log(token)
 	// send response JSON to include user fields
 	res.status(StatusCodes.CREATED).json({
 		message: "user registered",
@@ -67,7 +67,7 @@ const login = async (req, res) => {
 
 	// create jwt with jwt.sign
 	const token = createJWT({ payload: userInfo });
-
+	console.log(token)
 	// create cookie in the response, where we attach token
 	attachCookies({ res, token });
 

@@ -3,7 +3,8 @@ import axios from "axios";
 import Select from 'react-select'
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Card, CardBody, CardHeader, Heading, Icon, IconButton, Image, ListItem, OrderedList, Text, VStack } from '@chakra-ui/react'
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
-import { useAuthContext } from '../context/AuthContext.jsx'
+import { useGlobalContext } from '../context/GlobalContext.jsx'
+import connect from '../utils/connect.js'
 const Workout = ({
                      _id,
                      bodyPart,
@@ -18,16 +19,16 @@ const Workout = ({
                      description,
     }) => {
 
-    const [showInstructions, setShowInstructions] = useState(false)
+    const { user, favorites, setFavorites } = useGlobalContext()
 
-    const { user, favorites } = useAuthContext()
+    const isFavorite= favorites.some(favorite => favorite._id === _id)
 
-    const [isFavorite, setIsFavorite] = useState(favorites.includes(_id))
-    const toggleFavorite = async () => {
-      console.log("toggling...")
+  const toggleFavorite = async () => {
         try {
-            const response = await axios.patch("http://localhost:8800/api/v1/workouts", { id: _id })
-            console.log(response.data)
+            const response = await connect.patch("/workouts", { id: _id })
+            const { favorites } = response.data
+            setFavorites(favorites)
+          console.log(favorites)
         } catch (error) {
             throw new Error(error)
         }
@@ -56,12 +57,15 @@ const Workout = ({
                     as={MdFavorite}
                     aria-label="Unfavorite"
                     onClick={toggleFavorite}
+                    bgColor="white"
+                    color="#B22222"
                   />
                   :
-                  <Icon
+                  <IconButton
                     as={MdFavoriteBorder}
                     aria-label="Favorite"
                     onClick={toggleFavorite}
+                    bgColor="white"
                   />
                 )
               }

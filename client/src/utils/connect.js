@@ -4,7 +4,7 @@ import { config } from "./constants.js";
 
 const connect = axios.create({
   baseURL: config.url.API_URL,
-  withCredentials: true
+  withCredentials: true,
 });
 
 connect.interceptors.response.use(

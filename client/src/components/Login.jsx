@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { Box, Button, Container, FormControl, FormErrorMessage, FormLabel, Heading, HStack, Input, InputGroup, Text, VStack } from '@chakra-ui/react'
-import { useAuthContext } from '../context/AuthContext.jsx'
+import { useGlobalContext } from '../context/GlobalContext.jsx'
 
 const Login = () => {
 
-  const { login } = useAuthContext()
+  const { login } = useGlobalContext()
 
   const formik = useFormik({
     initialValues: {

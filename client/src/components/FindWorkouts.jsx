@@ -2,11 +2,11 @@ import { TabIndicator, TabList, TabPanels, TabPanel, Tabs, Tab, Container } from
 
 import Search from './Search.jsx'
 import Browse from './Browse.jsx'
-import { useAuthContext } from '../context/AuthContext.jsx'
+import { useGlobalContext } from '../context/GlobalContext.jsx'
 import UserDashboard from './UserDashboard.jsx'
 const FindWorkouts = ({ onSetSearchFields, clear }) => {
 
-  const { user } = useAuthContext()
+  const { user } = useGlobalContext()
 
   return (
       <Container >
@@ -29,7 +29,7 @@ const FindWorkouts = ({ onSetSearchFields, clear }) => {
             {
               user &&
               <TabPanel>
-                <UserDashboard onSetSearchFields={onSetSearchFields}/>
+                <UserDashboard />
               </TabPanel>
             }
 
