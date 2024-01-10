@@ -17,6 +17,6 @@ const compoundBodyPartsListSelect = compoundBodyPartsList.map(compoundBodyPart =
 const equipmentListSelect = equipmentList.map(equipment => {
   return { label: equipment,  value: equipment }
 })
-const levelListSelect = [{ label: "all", value: [1, 2, 3]}, { label: "beginner", value: 1 }, { label: "intermediate", value: 2 }, { label: "expert", value: 3 } ]
+const levelListSelect = [{ label: "beginner", value: 1 }, { label: "intermediate", value: 2 }, { label: "expert", value: 3 } ]
 
 export { bodyPartsListSelect, compoundBodyPartsListSelect, equipmentListSelect, levelListSelect }

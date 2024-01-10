@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import FindWorkouts from './components/FindWorkouts.jsx'
 import Workout from './components/Workout.jsx'
+import Navbar from './components/Navbar.jsx'
+import WorkoutList from './components/WorkoutList.jsx'
 import axios from 'axios'
-import { VStack } from '@chakra-ui/react'
+import { VStack, Container, Text, SimpleGrid } from '@chakra-ui/react'
 
 
 function App() {
@@ -38,21 +40,23 @@ function App() {
   }, [values])
 
   return (
-    <VStack maxWidth="1280px" minHeight="100vh" backgroundColor="antiquewhite">
-
+    <SimpleGrid>
+      <Navbar />
       <FindWorkouts
         onSetSearchFields={onSetSearchFields}
         clear={clear}
       />
-      <VStack>
-        {
-          results?.map((result, index) =>
-            <Workout key={index} { ...result }/>
-          )
-        }
-      </VStack>
 
-    </VStack>
+      {
+        results.length > 0 ?
+          <WorkoutList workouts={results} />
+          :
+          <Text>No Workouts to Show</Text>
+      }
+
+
+
+    </SimpleGrid>
   )
 }
 

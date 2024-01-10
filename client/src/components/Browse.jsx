@@ -44,7 +44,7 @@ const Browse = ({ onSetSearchFields }) => {
             <Select
               name="level"
               id="level"
-              type="text"
+              type="number"
               onChange={handleChange}
               options={levelListSelect}
             />

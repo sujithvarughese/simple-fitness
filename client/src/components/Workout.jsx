@@ -32,12 +32,16 @@ const Workout = ({
     if (!image) return
 
     return (
-        <Card borderRadius="10px" boxShadow="dark-lg" width="80%" maxWidth="650px">
+        <Card
+          borderRadius="10px"
+          boxShadow="dark-lg"
+          width={{ base: "97%", sm: "600px"}}
+
+        >
           <VStack>
             <CardHeader>
-              <Heading>{name || WorkOut }</Heading>
-              <Text>Target Muscle: {target}</Text>
-              <Text>Level: {level}</Text>
+              <Heading textTransform="capitalize">{name || WorkOut }</Heading>
+              <Text textTransform="capitalize">Target Muscle: {target}</Text>
             </CardHeader>
 
             <CardBody>

@@ -1,5 +1,6 @@
 import {MongoClient} from "mongodb";
-
+import Workout from '../models/Workout.js'
+import { StatusCodes } from "http-status-codes"
 
 let db
 const addToDb = async (req, res) => {
@@ -55,7 +56,9 @@ const getWorkoutNames = async (req, res) => {
         workoutNames: workoutNames
     })
 }
+/*
 const getWorkoutsFromDB = async (req, res) => {
+    console.log(req.query)
     let workouts = []
     try {
         await db.collection("workout")
@@ -65,14 +68,23 @@ const getWorkoutsFromDB = async (req, res) => {
     } catch (error) {
         throw new Error(error)
     }
-
     res.send({
         msg: "success",
         workouts: workouts
     })
+}*/
+const getWorkoutsFromDB = async (req, res) => {
+    try {
+        const workouts = await Workout.find(req.query).limit(10)
+        res.send({
+            msg: "success",
+            workouts: workouts
+        })
+    } catch (error) {
+        throw new Error(error)
+    }
 
 }
-
 const curateWorkout = async (req, res) => {
     const { level, equipment, duration } = req.body
     const numWorkouts = Math.floor(Number(duration) / 15)
@@ -103,7 +115,7 @@ const curateWorkout = async (req, res) => {
 // convert all string values of attribute to int
 const convertToInt = async (req, res) => {
     try {
-        await db.collection("workout").updateMany({},[{ "$set": { "level": { "$toInt": "$level" } } }],{ "multi" : true })
+        await db.collection("workout").updateMany({},[{ "$set": { "level": { "$toString": "$level" } } }],{ "multi" : true })
         res.send({ msg: "success" })
     } catch (error) {
         throw new Error(error)
