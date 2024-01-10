@@ -10,7 +10,7 @@ const FindWorkouts = ({ onSetSearchFields, setResults, clear }) => {
 
   return (
       <Container >
-        <Tabs onChange={clear} variant="enclosed" isFitted>
+        <Tabs isLazy onChange={clear} variant="enclosed" isFitted>
 
           <TabList>
             {user && <Tab>Favorites</Tab>}
@@ -29,7 +29,7 @@ const FindWorkouts = ({ onSetSearchFields, setResults, clear }) => {
             {
               user &&
               <TabPanel>
-                <UserDashboard setResults={setResults}/>
+                <UserDashboard setResults={setResults} clear={clear}/>
               </TabPanel>
             }
 

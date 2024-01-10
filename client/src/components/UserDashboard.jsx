@@ -8,8 +8,11 @@ import { bodyPartsListSelect } from '../data.js'
 
 const UserDashboard = ({ setResults }) => {
 
-  const { favorites } = useGlobalContext()
-  setResults(favorites)
+  const { favorites, user } = useGlobalContext()
+
+  useEffect(() => {
+    setResults(favorites)
+  }, [favorites])
 
 }
 

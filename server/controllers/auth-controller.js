@@ -60,10 +60,10 @@ const login = async (req, res) => {
 		throw new UnauthenticatedError("Invalid credentials");
 	}
 
-	const { _id, isAdmin, favorites } = user
+	const { _id, isAdmin, firstName, favorites } = user
 
 	// user variable with just the fields we want to send
-	const userInfo = { userID: _id, isAdmin: isAdmin };
+	const userInfo = { userID: _id, firstName: firstName, isAdmin: isAdmin };
 
 	// create jwt with jwt.sign
 	const token = createJWT({ payload: userInfo });

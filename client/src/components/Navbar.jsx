@@ -8,13 +8,14 @@ const Navbar = () => {
             p="10px"
             justify="space-between"
             alignItems="center"
-            bgColor="#B22222"
+            bgColor="#1a1b21"
+            color="white"
     >
-      <Heading>Simple Workout</Heading>
+      <Heading>SF</Heading>
       {
         user ?
           <HStack>
-            <Text>Welcome!</Text>
+            <Text textTransform="capitalize">Hello {user.firstName}!</Text>
             <Button onClick={logout}>Log Out</Button>
           </HStack>
 
