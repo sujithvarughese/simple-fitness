@@ -1,16 +1,18 @@
 import connect from '../utils/connect.js'
 import { useEffect } from 'react'
-const UserDashboard = () => {
+import { Box } from '@chakra-ui/react'
+import { useAuthContext } from '../context/AuthContext.jsx'
+import WorkoutList from './WorkoutList.jsx'
 
+const UserDashboard = ({ onSetSearchFields }) => {
 
-  useEffect(() => {
+  const { favorites } = useAuthContext()
 
-  }, [])
 
   return (
-    <div>
-
-    </div>
+    <Box>
+      <WorkoutList workouts={favorites}/>
+    </Box>
   )
 }
 

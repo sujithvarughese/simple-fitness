@@ -19,6 +19,7 @@ const reducer = (state, action) => {
 		return {
 			...state,
 			user: action.payload.user,
+			favorites: action.payload.favorites
 		};
 	}
 	if (action.type === LOGOUT_USER) {

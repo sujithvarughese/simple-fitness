@@ -1,78 +1,26 @@
 import {MongoClient} from "mongodb";
 import Workout from '../models/Workout.js'
+import User from '../models/User.js'
 import { StatusCodes } from "http-status-codes"
 
 let db
-const addToDb = async (req, res) => {
+
+const toggleFavorites = async (req, res) => {
     try {
-        await db.collection("workout").updateOne({ id: req.body.fileId }, { $set: { image: req.body.image } }, { multi: true })
-        res.send("Saved")
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-const setLevel = async (req, res) => {
-    try {
-        await db.collection("workout").updateOne({ id: req.body.fileId } , { $set: { level: req.body.level } }, { returnDocument: true } )
-        res.send({
-            msg: "success",
-        })
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-const editWorkout = async (req, res) => {
-    console.log(req.body)
-    try {
-        await db.collection("workout").updateOne({ id: req.body.fileId } , { $set: { description: req.body.description } }, { returnDocument: true })
-        res.send({ msg: "success"})
+        const user = await User.findById(req.user.userID)
+        const favorites = [...user.favorites]
+        const filteredFavorites = favorites.filter(workout => workout !== req.body)
+        if (filteredFavorites.length === favorites.length) {
+            filteredFavorites.push(req.body)
+        }
+        await User.findByIdAndUpdate(req.user.userID, { favorites: filteredFavorites })
+        res.send({ msg: "success" })
     } catch (error) {
         throw new Error(error)
     }
 }
 
-const deleteWorkout = async (req, res) => {
-    try {
-        await db.collection("workout").deleteOne({ id: req.body.fileId })
-        res.send({ msg: "success"})
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-const getWorkoutNames = async (req, res) => {
-    let workoutNames = []
-    try {
-        await db.collection("workout")
-          .find({}, { name: 1})
-          .forEach(workout => {
-              console.log(workout.name)
-              workoutNames.push(workout.name)
-          })
-    } catch (error) {
-        throw new Error(error)
-    }
-    res.send({
-        msg: "success",
-        workoutNames: workoutNames
-    })
-}
-/*
-const getWorkoutsFromDB = async (req, res) => {
-    console.log(req.query)
-    let workouts = []
-    try {
-        await db.collection("workout")
-            .find(req.query)
-            .limit(10)
-            .forEach(workout => workouts.push(workout))
-    } catch (error) {
-        throw new Error(error)
-    }
-    res.send({
-        msg: "success",
-        workouts: workouts
-    })
-}*/
+
 const getWorkoutsFromDB = async (req, res) => {
     try {
         const workouts = await Workout.find(req.query).limit(10)
@@ -112,15 +60,6 @@ const curateWorkout = async (req, res) => {
     })
 }
 
-// convert all string values of attribute to int
-const convertToInt = async (req, res) => {
-    try {
-        await db.collection("workout").updateMany({},[{ "$set": { "level": { "$toString": "$level" } } }],{ "multi" : true })
-        res.send({ msg: "success" })
-    } catch (error) {
-        throw new Error(error)
-    }
-}
 
 const connectDatabase = async (uri) => {
     try {
@@ -139,4 +78,4 @@ const connectDatabase = async (uri) => {
 
 
 
-export { getWorkoutsFromDB, connectDatabase, addToDb, setLevel, editWorkout, deleteWorkout, curateWorkout, convertToInt, getWorkoutNames }
+export { getWorkoutsFromDB, toggleFavorites, connectDatabase, curateWorkout }

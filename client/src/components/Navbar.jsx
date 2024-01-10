@@ -2,7 +2,7 @@ import { Flex, Heading, Box, Button, Text, Spacer, HStack } from '@chakra-ui/rea
 import Login from './Login.jsx'
 import { useAuthContext } from '../context/AuthContext.jsx'
 const Navbar = () => {
-  const { setShowRegisterModal } = useAuthContext()
+  const { user, setShowRegisterModal, logout } = useAuthContext()
   return (
     <HStack as="nav"
             p="10px"
@@ -11,9 +11,21 @@ const Navbar = () => {
             bgColor="#B22222"
     >
       <Heading>Simple Workout</Heading>
+      {
+        user ?
+          <HStack>
+            <Text>Welcome!</Text>
+            <Button onClick={logout}>Log Out</Button>
+          </HStack>
 
-      <Login />
-      <Text>Don't have an Account? <button type="click" onClick={setShowRegisterModal}>Register</button></Text>
+          :
+          <Box>
+            <Login />
+            <Text>Don't have an Account? <button type="click" onClick={setShowRegisterModal}>Register</button></Text>
+          </Box>
+
+      }
+
     </HStack>
   )
 }

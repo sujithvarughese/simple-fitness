@@ -2,13 +2,18 @@ import { TabIndicator, TabList, TabPanels, TabPanel, Tabs, Tab, Container } from
 
 import Search from './Search.jsx'
 import Browse from './Browse.jsx'
+import { useAuthContext } from '../context/AuthContext.jsx'
+import UserDashboard from './UserDashboard.jsx'
 const FindWorkouts = ({ onSetSearchFields, clear }) => {
+
+  const { user } = useAuthContext()
 
   return (
       <Container >
         <Tabs onChange={clear} variant="enclosed" isFitted>
 
           <TabList>
+            {user && <Tab>Favorites</Tab>}
             <Tab>Browse</Tab>
             <Tab>Search</Tab>
           </TabList>
@@ -21,6 +26,12 @@ const FindWorkouts = ({ onSetSearchFields, clear }) => {
 
           />
           <TabPanels>
+            {
+              user &&
+              <TabPanel>
+                <UserDashboard onSetSearchFields={onSetSearchFields}/>
+              </TabPanel>
+            }
 
             <TabPanel>
               <Browse onSetSearchFields={onSetSearchFields}/>

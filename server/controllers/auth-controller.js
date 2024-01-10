@@ -17,7 +17,6 @@ const register = async (req, res) => {
 	if (userAlreadyExists) {
 		throw new BadRequestError("User already exists");
 	}
-
 	// first registered user is admin
 	const isFirstUser = (await User.countDocuments({})) === 0;
 	// create new user in mongodb
@@ -28,7 +27,6 @@ const register = async (req, res) => {
 
 	// create jwt with jwt.sign
 	const token = createJWT({ payload: userInfo });
-
 	// create cookie in the response, where we attach token
 	attachCookies({ res, token });
 
@@ -50,7 +48,7 @@ const login = async (req, res) => {
 
 	// check User model in database for entered email
 	// select('+password') needed since password property in User is hidden
-	const user = await User.findOne({ email }).select("+password");
+	const user = await User.findOne({ email }).select("+password").populate("favorites");
 	if (!user) {
 		throw new UnauthenticatedError("Invalid credentials");
 	}
@@ -62,17 +60,21 @@ const login = async (req, res) => {
 		throw new UnauthenticatedError("Invalid credentials");
 	}
 
+	const { _id, isAdmin, favorites } = user
+
 	// user variable with just the fields we want to send
-	const userInfo = { userID: user._id, isAdmin: user.isAdmin };
+	const userInfo = { userID: _id, isAdmin: isAdmin };
 
 	// create jwt with jwt.sign
 	const token = createJWT({ payload: userInfo });
 
 	// create cookie in the response, where we attach token
 	attachCookies({ res, token });
+
 	res.status(StatusCodes.OK).json({
 		message: "user logged in success",
-		user: userInfo
+		user: userInfo,
+		favorites: favorites
 	});
 }
 

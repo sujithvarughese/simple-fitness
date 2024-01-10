@@ -10,6 +10,7 @@ import {
 	SET_AUTH_STATE,
 	SHOW_REGISTER_MODAL
 } from "./actions.js";
+import connect from '../utils/connect.js'
 
 const initialState = {
 	user: null,
@@ -27,7 +28,7 @@ const AuthProvider = ({ children }) => {
 
 	const register = async (credentials) => {
 		try {
-			const response = await axiosDB.post("/auth/register", credentials)
+			const response = await connect.post("/auth/register", credentials)
 			// user = { userID: _id, isAdmin: isAdmin }
 			const { user } = response.data
 			dispatch({
@@ -41,25 +42,24 @@ const AuthProvider = ({ children }) => {
 	}
 
 	const setShowRegisterModal = () => {
-		console.log("showing modal...")
 		dispatch({
 			type: SHOW_REGISTER_MODAL
 		})
 	}
 	const login = async (credentials) => {
 		try {
-			const response = await axiosDB.post("/auth/login", credentials)
-			const { user } = response.data
+			const response = await connect.post("/auth/login", credentials)
+			const { user, favorites } = response.data
 			dispatch({
 				type: LOGIN_USER,
-				payload: { user }
+				payload: { user, favorites }
 			})
 		} catch (error) {
 			console.log(error);
 		}
 	}
 	const logout = async () => {
-		await axiosDB("/auth/logout");
+		await connect("/auth/logout");
 		dispatch({ type: LOGOUT_USER });
 	}
 

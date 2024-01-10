@@ -1,8 +1,11 @@
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { Box, Button, Container, FormControl, FormErrorMessage, FormLabel, Heading, HStack, Input, InputGroup, Text, VStack } from '@chakra-ui/react'
+import { useAuthContext } from '../context/AuthContext.jsx'
 
 const Login = () => {
+
+  const { login } = useAuthContext()
 
   const formik = useFormik({
     initialValues: {
@@ -10,7 +13,7 @@ const Login = () => {
       password: "",
     },
     onSubmit: async (values) => {
-      console.log(values)
+      login(values)
       formik.resetForm()
     },
     validationSchema: Yup.object({

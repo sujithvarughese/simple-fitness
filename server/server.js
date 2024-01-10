@@ -6,26 +6,28 @@ import morgan from "morgan";
 import mongoose from 'mongoose'
 import bodyParser from "body-parser"
 import bodyParserErrorHandler from "express-body-parser-error-handler";
+import cookieParser from "cookie-parser";
 import errorHandler from "./middleware/error-handler.js";
 import notFound from "./middleware/not-found.js";
 import { authenticateUser, authorizePermissions } from "./middleware/authentication.js";
 import authRouter from './routes/auth-router.js'
-import workoutRouter from "./routes/workout-route.js";
+import workoutRouter from "./routes/workout-router.js";
 import { connectDatabase } from "./controllers/workout-controller.js";
-
 
 const app = express()
 const port = process.env.PORT || 8800
 dotenv.config()
 
-
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 app.use(bodyParser.json({ limit: '600mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
 app.use(bodyParserErrorHandler());
 app.use(express.json())
-app.use(cors({
-    origin: ["http://localhost:5173"]
-}));
+app.use(cookieParser(process.env.JWT_SECRET));
+
 if (process.env.NODE_ENV !== "production") {
     app.use(morgan("dev"));
 }

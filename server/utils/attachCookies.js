@@ -2,7 +2,7 @@
 const attachCookies = ({ res, token }) => {
 
 	// one day in milliseconds
-	const oneDay = 1000 * 60 * 60 *24
+	const oneDay = 1000 * 60 * 60 * 24
 
 	res.cookie('token', token, {
 		httpOnly: true,  // can only be accessed by the browser
