@@ -6,17 +6,11 @@ import WorkoutList from './WorkoutList.jsx'
 import Select from 'react-select'
 import { bodyPartsListSelect } from '../data.js'
 
-const UserDashboard = () => {
+const UserDashboard = ({ setResults }) => {
 
   const { favorites } = useGlobalContext()
+  setResults(favorites)
 
-
-  return (
-    <Box>
-
-      <WorkoutList workouts={favorites} />
-    </Box>
-  )
 }
 
 export default UserDashboard

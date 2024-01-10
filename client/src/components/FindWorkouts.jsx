@@ -4,7 +4,7 @@ import Search from './Search.jsx'
 import Browse from './Browse.jsx'
 import { useGlobalContext } from '../context/GlobalContext.jsx'
 import UserDashboard from './UserDashboard.jsx'
-const FindWorkouts = ({ onSetSearchFields, clear }) => {
+const FindWorkouts = ({ onSetSearchFields, setResults, clear }) => {
 
   const { user } = useGlobalContext()
 
@@ -29,7 +29,7 @@ const FindWorkouts = ({ onSetSearchFields, clear }) => {
             {
               user &&
               <TabPanel>
-                <UserDashboard />
+                <UserDashboard setResults={setResults}/>
               </TabPanel>
             }
 

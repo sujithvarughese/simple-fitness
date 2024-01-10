@@ -50,6 +50,7 @@ function App() {
       <Navbar />
       <FindWorkouts
         onSetSearchFields={onSetSearchFields}
+        setResults={setResults}
         clear={clear}
       />
 
