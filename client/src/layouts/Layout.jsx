@@ -19,7 +19,7 @@ const Layout = () => {
   }, [user])
 
   return (
-    <SimpleGrid>
+    <SimpleGrid maxW="1200px" m="auto">
       {showRegisterModal && <Register />}
       <Navbar />
       <Outlet />

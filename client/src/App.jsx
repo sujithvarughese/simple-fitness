@@ -24,39 +24,6 @@ function App() {
       </Route>
     )
   )
-
-  const { user, showRegisterModal } = useGlobalContext()
-
-  const [values, setValues] = useState({})
-  const [results, setResults] = useState([])
-
-  const clear = () => {
-    setValues({})
-    setResults([])
-  }
-  const onSetSearchFields = searchFields => setValues(searchFields)
-  const fetchWorkouts = async () => {
-    if (Object.keys(values).length === 0) {
-      return
-    }
-    try {
-      const response = await connect("/workouts", {
-        params: {  ...values }
-      })
-      const { workouts } = response.data
-      setResults(workouts)
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
-
-  useEffect(() => {
-    if (values === null) {
-      return
-    }
-    fetchWorkouts()
-  }, [values])
-
   return <RouterProvider router={router} />
 
 }

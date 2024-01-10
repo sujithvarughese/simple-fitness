@@ -1,22 +1,41 @@
-import { Flex, Heading, Box, Button, Text, Spacer, HStack } from '@chakra-ui/react'
+import { Flex, Heading, Box, Button, Text, Spacer, HStack, Image } from '@chakra-ui/react'
 import Login from './Login.jsx'
 import { useGlobalContext } from '../context/GlobalContext.jsx'
+import fitnessTextImg from "../assets/images/fitness-text.png"
+import { useNavigate } from 'react-router-dom'
+
 const Navbar = () => {
   const { user, setShowRegisterModal, logout } = useGlobalContext()
+
+  const navigate = useNavigate()
+  const logoutAndRedirect = () => {
+    navigate("/")
+    logout()
+  }
+
   return (
     <HStack as="nav"
-            p="10px"
+            p={user ? "0" : "10px"}
+            paddingLeft="15px"
+            paddingRight="15px"
             justify="space-between"
             alignItems="center"
-            bgColor="#1a1b21"
-            color="white"
+            bg={user ? "white" : "#1a1b21"}
+            color={user ? "black" : "white"}
     >
-      <Heading>SF</Heading>
+      <Heading>{user ?
+        <Image
+          src={fitnessTextImg}
+          margin="-2"
+          width="200px"
+        ></Image>
+        :
+        "SF"}
+      </Heading>
       {
         user ?
           <HStack>
-            <Text textTransform="capitalize">Hello {user.firstName}!</Text>
-            <Button onClick={logout}>Log Out</Button>
+            <Button onClick={logoutAndRedirect}>Log Out</Button>
           </HStack>
 
           :
