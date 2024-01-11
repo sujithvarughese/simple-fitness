@@ -1328,4 +1328,5 @@ const workoutNames = [
 const workoutNamesListSelect = workoutNames.map(name => {
   return { label: name,  value: name }
 })
+
 export default workoutNamesListSelect

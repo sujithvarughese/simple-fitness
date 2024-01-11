@@ -1,5 +1,5 @@
 import { FormLabel, Box } from '@chakra-ui/react'
-import workoutNamesListSelect from '../../workoutNames.js'
+import workoutNamesListSelect from '../workoutNames.js'
 import AsyncSelect from 'react-select/async'
 
 const Search = ({ onSetSearchFields }) => {
