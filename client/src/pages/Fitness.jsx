@@ -1,7 +1,7 @@
 import { useGlobalContext } from '../context/GlobalContext.jsx'
 import { useEffect, useState } from 'react'
 import connect from '../utils/connect.js'
-import { Card, Heading, Image, SimpleGrid, VStack } from '@chakra-ui/react'
+import { Card, Heading, Image, Progress, SimpleGrid, VStack } from '@chakra-ui/react'
 import FindWorkouts from '../tabs/FindWorkouts.jsx'
 import WorkoutList from '../components/WorkoutList.jsx'
 import smallStepsBannerImg from "../assets/images/small-steps-banner.jpeg"
@@ -14,6 +14,9 @@ const Fitness = () => {
 
   // search parameters selected by user
   const [values, setValues] = useState({})
+
+  // for progress bar, controlled in fetch function
+  const [isLoading, setIsLoading] = useState(false)
   // passed down function that sets local state
   const onSetSearchFields = searchFields => setValues(searchFields)
 
@@ -34,6 +37,7 @@ const Fitness = () => {
       return
     }
     try {
+      setIsLoading(true)
       const response = await connect("/workouts", {
         params: {  ...values }
       })
@@ -42,6 +46,8 @@ const Fitness = () => {
       setResults(workouts)
     } catch (error) {
       throw new Error(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -92,12 +98,14 @@ const Fitness = () => {
             clear={clear}
           />
 
+          <Progress size="xs" isIndeterminate={isLoading}/>
           {
             // when above search fields are changed, new list of workouts is rendered
             // Favorites tab does not use this components search fields state; Results are directly manipulated from Favorites
             results.length > 0 &&
               <WorkoutList workouts={results} />
           }
+
         </Card>
       </VStack>
     </SimpleGrid>

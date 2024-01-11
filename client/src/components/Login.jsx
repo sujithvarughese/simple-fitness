@@ -2,10 +2,12 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { Box, Button, Container, FormControl, FormErrorMessage, FormLabel, Heading, HStack, Input, InputGroup, Text, VStack } from '@chakra-ui/react'
 import { useGlobalContext } from '../context/GlobalContext.jsx'
+import { useState } from 'react'
 
 const Login = () => {
 
   const { login } = useGlobalContext()
+  const [loginLoading, setLoginLoading] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -13,7 +15,14 @@ const Login = () => {
       password: "",
     },
     onSubmit: async (values) => {
-      login(values)
+      try {
+        setLoginLoading(true)
+        await login(values)
+      } catch (error) {
+        throw new Error(error)
+      } finally {
+        setLoginLoading(false)
+      }
       formik.resetForm()
     },
     validationSchema: Yup.object({
@@ -56,7 +65,7 @@ const Login = () => {
 
           <Button
             type="submit"
-            loadingText="Logging In..."
+            isLoading={loginLoading}
             size={{ base: "sm", md: "md"}}
 
           >Log In

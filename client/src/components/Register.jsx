@@ -2,10 +2,12 @@ import { Button, ButtonGroup, FormControl, FormErrorMessage, FormLabel, Input, I
 import { useGlobalContext } from '../context/GlobalContext.jsx'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useState } from 'react'
 
 const Register = () => {
 
   const { showRegisterModal, setShowRegisterModal, register } = useGlobalContext()
+  const [registerLoading, setRegisterLoading] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -16,9 +18,18 @@ const Register = () => {
       passwordConfirm: ""
     },
     onSubmit: async (values) => {
-      register(values)
-      setShowRegisterModal()
-      formik.resetForm()
+      try {
+        setRegisterLoading(true)
+        await register(values)
+      } catch (error) {
+        throw new Error(error)
+      } finally {
+        setShowRegisterModal()
+        setRegisterLoading(false)
+        formik.resetForm()
+      }
+
+
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required("Required"),
@@ -107,7 +118,7 @@ const Register = () => {
                   <FormErrorMessage>{formik.errors.passwordConfirm}</FormErrorMessage>
                 </FormControl>
                 <ButtonGroup>
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit" isLoading={registerLoading} >Submit</Button>
                   <Button type="click" onClick={setShowRegisterModal}>Cancel</Button>
                 </ButtonGroup>
 

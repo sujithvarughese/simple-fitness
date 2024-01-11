@@ -7,6 +7,7 @@ import gymMatBannerImg from "../assets/images/gym-mat-banner.jpeg"
 import dumbbellBanner from "../assets/images/dumbbell-banner.jpeg"
 import previewWorkoutImg from "../assets/images/image-preview.png"
 import start2024Img from "../assets/images/start-2024.jpeg"
+import { useState } from 'react'
 
 const credentials = {
   email: import.meta.env.VITE_ADMIN_LOGIN,
@@ -17,8 +18,19 @@ const Landing = () => {
 
   const { login, setShowRegisterModal } = useGlobalContext()
 
+  const [guestLoginLoading, setGuestLoginLoading] = useState(false)
+
   // function for Preview Site button click; Uses guest credentials to automatically log in
-  const previewAsGuest = () => login(credentials)
+  const previewAsGuest = async () => {
+    try {
+      setGuestLoginLoading(true)
+      await login(credentials)
+    } catch (error) {
+      throw new Error(error)
+    } finally {
+      setGuestLoginLoading(false)
+    }
+  }
 
   return (
     <VStack>
@@ -78,7 +90,11 @@ const Landing = () => {
 
 
       <ButtonGroup size="lg" colorScheme="blackAlpha" variant="outline">
-        <Button onClick={previewAsGuest}>Preview Site</Button>
+        <Button
+          onClick={previewAsGuest}
+          isLoading={guestLoginLoading}
+        >Preview Site
+        </Button>
         {/* toggle modal function from context / rendered from Layout */}
         <Button onClick={setShowRegisterModal}>Create Account</Button>
       </ButtonGroup>

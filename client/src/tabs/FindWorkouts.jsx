@@ -11,7 +11,6 @@ const FindWorkouts = ({ onSetSearchFields, setResults, clear }) => {
           isLazy isFitted
           onChange={clear}
           variant="enclosed-colored"
-          marginTop={{ lg: "-9" }}
           marginBottom="2"
         >
           <TabList>

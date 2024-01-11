@@ -16,8 +16,6 @@ const Navbar = () => {
     logout()
   }
 
-  const logoDisplay = () => user ? "flex" : ""
-
   return (
     <HStack as="nav"
             p={user ? "0" : "10px"}
