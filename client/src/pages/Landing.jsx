@@ -64,7 +64,7 @@ const Landing = () => {
         </Flex>
 
         <SimpleGrid>
-          <Heading textAlign="center" fontSize="84px">SIMPLE</Heading>
+          <Heading textAlign="center" fontSize="84px">SIMPLER</Heading>
           <Image src={fitnessTextImg}></Image>
           <Heading
             fontSize="20px"
@@ -72,7 +72,7 @@ const Landing = () => {
             paddingBottom="20px"
             textAlign="center"
           >
-            Get Fit. The Simple Way.
+            Get Fit. The Simpler Way.
           </Heading>
         </SimpleGrid>
 

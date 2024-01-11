@@ -29,7 +29,7 @@ const Browse = ({ onSetSearchFields }) => {
           </FormControl>
 
           <FormControl>
-            <FormLabel htmlFor="equipment">Equipment</FormLabel>
+            <FormLabel htmlFor="equipment">Available Equipment</FormLabel>
             <Select
               name="equipment"
               id="equipment"

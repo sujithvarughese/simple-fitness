@@ -39,11 +39,6 @@ const Fitness = () => {
     }
   }
 
-  const [background, setBackground] = useState("")
-  const backgrounds = [weightsBg, dumbbellBg, fitnessEquipBg]
-  useEffect(() => {
-    setBackground(backgrounds[Math.floor(Math.random() * backgrounds.length)])
-  }, [])
 
   useEffect(() => {
     if (values === null) {

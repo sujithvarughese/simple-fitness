@@ -19,7 +19,7 @@ const Search = ({ onSetSearchFields }) => {
 
   return (
     <Box textTransform="capitalize">
-        <FormLabel htmlFor="query">Name</FormLabel>
+        <FormLabel htmlFor="query">Search any exercise by name</FormLabel>
         <AsyncSelect
           id="query"
           name="query"

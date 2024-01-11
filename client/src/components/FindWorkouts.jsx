@@ -2,40 +2,34 @@ import { TabIndicator, TabList, TabPanels, TabPanel, Tabs, Tab, Container } from
 
 import Search from './Search.jsx'
 import Browse from './Browse.jsx'
+import Favorites from './Favorites.jsx'
 import { useGlobalContext } from '../context/GlobalContext.jsx'
-import UserDashboard from './UserDashboard.jsx'
 const FindWorkouts = ({ onSetSearchFields, setResults, clear }) => {
-
-  const { user } = useGlobalContext()
 
   return (
       <Container>
         <Tabs
-          isLazy
+          isLazy isFitted
           onChange={clear}
           variant="enclosed"
-          isFitted
         >
           <TabList>
-            {user && <Tab>Favorites</Tab>}
+            <Tab>Favorites</Tab>
             <Tab>Browse</Tab>
             <Tab>Search</Tab>
           </TabList>
+
           <TabIndicator
             mt="-1.5px"
             height="2px"
             bg="red.500"
             borderRadius="1px"
-
-
           />
+
           <TabPanels>
-            {
-              user &&
-              <TabPanel>
-                <UserDashboard setResults={setResults} clear={clear}/>
-              </TabPanel>
-            }
+            <TabPanel>
+              <Favorites setResults={setResults}/>
+            </TabPanel>
 
             <TabPanel>
               <Browse onSetSearchFields={onSetSearchFields}/>
@@ -44,8 +38,8 @@ const FindWorkouts = ({ onSetSearchFields, setResults, clear }) => {
             <TabPanel>
               <Search onSetSearchFields={onSetSearchFields}/>
             </TabPanel>
-
           </TabPanels>
+
         </Tabs>
       </Container>
 
