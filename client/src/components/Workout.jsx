@@ -1,7 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 import Select from 'react-select'
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Card, CardBody, CardHeader, Heading, Icon, IconButton, Image, ListItem, OrderedList, Text, VStack } from '@chakra-ui/react'
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Card, CardBody, CardHeader, Flex, Heading, Icon, IconButton, Image, ListItem, OrderedList, SimpleGrid, Text, VStack } from '@chakra-ui/react'
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { useGlobalContext } from '../context/GlobalContext.jsx'
 import connect from '../utils/connect.js'
@@ -41,34 +41,44 @@ const Workout = ({
           m="1"
           boxShadow="dark-lg"
           width={{ base: "97%", md: "800px"}}
-
         >
-          <VStack>
-            <CardHeader>
-              <Heading textTransform="capitalize">{name || WorkOut }</Heading>
-              <Text textTransform="capitalize">Target Muscle: {target}</Text>
-            </CardHeader>
+          <SimpleGrid>
+            <Flex justifyContent="space-between">
 
-            <CardBody>
+              <CardHeader>
+                <Heading textTransform="capitalize">{name || WorkOut }</Heading>
+                <Text textTransform="capitalize">Target Muscle: {target}</Text>
+              </CardHeader>
+
               {
                 user && (
                   isFavorite ?
-                  <IconButton
-                    as={MdFavorite}
-                    aria-label="Unfavorite"
-                    onClick={toggleFavorite}
-                    bgColor="white"
-                    color="#B22222"
-                  />
-                  :
-                  <IconButton
-                    as={MdFavoriteBorder}
-                    aria-label="Favorite"
-                    onClick={toggleFavorite}
-                    bgColor="white"
-                  />
+                    <IconButton
+                      as={MdFavorite}
+                      aria-label="Unfavorite"
+                      onClick={toggleFavorite}
+                      bgColor="white"
+                      color="#B22222"
+                      margin="4"
+                    />
+                    :
+                    <IconButton
+                      as={MdFavoriteBorder}
+                      aria-label="Favorite"
+                      onClick={toggleFavorite}
+                      bgColor="white"
+                      margin="4"
+                    />
                 )
               }
+
+
+
+            </Flex>
+
+
+            <CardBody>
+
               <Image src={image} alt="gif" borderRadius="10px" width="100%"/>
 
               <Text>{description}</Text>
@@ -94,7 +104,7 @@ const Workout = ({
                 </AccordionItem>
               </Accordion>
             </CardBody>
-          </VStack>
+          </SimpleGrid>
 
         </Card>
     );
