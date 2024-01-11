@@ -38,9 +38,9 @@ const Workout = ({
 
     return (
         <Card
-          borderRadius="10px"
+          m="1"
           boxShadow="dark-lg"
-          width={{ base: "97%", sm: "600px"}}
+          width={{ base: "97%", md: "800px"}}
 
         >
           <VStack>

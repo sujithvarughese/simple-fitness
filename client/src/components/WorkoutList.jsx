@@ -4,7 +4,7 @@ import Workout from './Workout.jsx'
 
 const WorkoutList = ({ workouts }) => {
   return (
-    <VStack>
+    <VStack bgColor="#1a1b21">
       {
         workouts?.map(workout =>
           <Workout key={workout.id} { ...workout }/>

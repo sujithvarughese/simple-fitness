@@ -9,9 +9,13 @@ const FindWorkouts = ({ onSetSearchFields, setResults, clear }) => {
   const { user } = useGlobalContext()
 
   return (
-      <Container >
-        <Tabs isLazy onChange={clear} variant="enclosed" isFitted>
-
+      <Container>
+        <Tabs
+          isLazy
+          onChange={clear}
+          variant="enclosed"
+          isFitted
+        >
           <TabList>
             {user && <Tab>Favorites</Tab>}
             <Tab>Browse</Tab>

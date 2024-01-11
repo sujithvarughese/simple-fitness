@@ -76,7 +76,9 @@ const Fitness = () => {
         <Card
           bgColor="white"
           marginX="4"
-          marginY={{md: "-7", lg: "-12", xl: "-20"}}
+          marginTop={{md: "-7", lg: "-12", xl: "-20"}}
+          marginBottom="10"
+          width={{ base: "97%", md: "800px"}}
         >
           <FindWorkouts
             onSetSearchFields={onSetSearchFields}
