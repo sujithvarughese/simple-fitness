@@ -1,9 +1,10 @@
-import Navbar from '../components/Navbar.jsx'
+import { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { SimpleGrid } from '@chakra-ui/react'
 import { useGlobalContext } from '../context/GlobalContext.jsx'
+import Navbar from '../components/Navbar.jsx'
 import Register from '../components/Register.jsx'
-import { Outlet, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import Footer from '../components/Footer.jsx'
 const Layout = () => {
 
   const { user, showRegisterModal } = useGlobalContext()
@@ -23,8 +24,17 @@ const Layout = () => {
     <SimpleGrid maxW="1200px" m="auto">
       {/* Register modal is triggered when Create Account button on landing page is clicked */}
       {showRegisterModal && <Register />}
-      <Navbar />
-      <Outlet />
+      <nav>
+        <Navbar />
+      </nav>
+      <main>
+        <Outlet />
+      </main>
+      <footer>
+        <Footer />
+      </footer>
+
+
     </SimpleGrid>
   )
 }

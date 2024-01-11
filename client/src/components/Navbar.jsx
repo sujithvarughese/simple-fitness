@@ -17,7 +17,7 @@ const Navbar = () => {
   }
 
   return (
-    <HStack as="nav"
+    <HStack
             p={user ? "0" : "10px"}
             paddingLeft="15px"
             paddingRight="15px"

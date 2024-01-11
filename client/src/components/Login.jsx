@@ -67,7 +67,6 @@ const Login = () => {
             type="submit"
             isLoading={loginLoading}
             size={{ base: "sm", md: "md"}}
-
           >Log In
           </Button>
         </HStack>
