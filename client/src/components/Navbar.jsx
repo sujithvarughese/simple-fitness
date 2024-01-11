@@ -6,9 +6,11 @@ import fitnessTextInvertedImg from "../assets/images/fitness-text-inverted.png"
 import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
-  const { user, setShowRegisterModal, logout } = useGlobalContext()
+  const { user, logout } = useGlobalContext()
 
   const navigate = useNavigate()
+
+  // navigate to landing page, then logout
   const logoutAndRedirect = () => {
     navigate("/")
     logout()
@@ -42,17 +44,13 @@ const Navbar = () => {
       {
         user ?
           <HStack>
-            <Button onClick={logoutAndRedirect}>Log Out</Button>
+            <Button onClick={logoutAndRedirect} colorScheme="blackAlpha" variant="outline">Log Out</Button>
           </HStack>
-
           :
           <Box>
             <Login />
-
           </Box>
-
       }
-
     </HStack>
   )
 }

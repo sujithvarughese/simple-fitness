@@ -1,27 +1,24 @@
-import React from 'react'
-import { Box, Button, ButtonGroup, Container, Flex, Heading, Image, SimpleGrid, Spacer, Text, VStack } from '@chakra-ui/react'
+import { Button, ButtonGroup, Flex, Heading, Image, SimpleGrid, Spacer, VStack } from '@chakra-ui/react'
+import { useGlobalContext } from '../context/GlobalContext.jsx'
 import fitnessTextImg from "../assets/images/fitness-text.png"
 import keepThingsSimpleImg from "../assets/images/keep-things-simple-noBg.png"
 import gymBagBannerImg from "../assets/images/gym-bag-banner.jpeg"
 import gymMatBannerImg from "../assets/images/gym-mat-banner.jpeg"
-import shoeTieBanner from "../assets/images/shoe-tie-banner.jpeg"
-import shoeTieBannerNoBg from "../assets/images/shoe-tie-banner-noBg.png"
 import dumbbellBanner from "../assets/images/dumbbell-banner.jpeg"
 import previewWorkoutImg from "../assets/images/image-preview.png"
 import start2024Img from "../assets/images/start-2024.jpeg"
-import { useGlobalContext } from '../context/GlobalContext.jsx'
 
 const credentials = {
   email: import.meta.env.VITE_ADMIN_LOGIN,
   password: import.meta.env.VITE_ADMIN_PASSWORD
 }
+
 const Landing = () => {
 
   const { login, setShowRegisterModal } = useGlobalContext()
 
-  const previewAsGuest = () => {
-    login(credentials)
-  }
+  // function for Preview Site button click; Uses guest credentials to automatically log in
+  const previewAsGuest = () => login(credentials)
 
   return (
     <VStack>
@@ -75,14 +72,12 @@ const Landing = () => {
             Get Fit. The Simpler Way.
           </Heading>
         </SimpleGrid>
-
-
       </SimpleGrid>
-
 
 
       <ButtonGroup size="lg" colorScheme="blackAlpha" variant="outline">
         <Button onClick={previewAsGuest}>Preview Site</Button>
+        {/* toggle modal function from context / rendered from Layout */}
         <Button onClick={setShowRegisterModal}>Create Account</Button>
       </ButtonGroup>
 
@@ -101,10 +96,6 @@ const Landing = () => {
           src={keepThingsSimpleImg}
         ></Image>
       </SimpleGrid>
-
-
-
-
     </VStack>
   )
 }

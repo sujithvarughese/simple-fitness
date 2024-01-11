@@ -10,6 +10,7 @@ const Layout = () => {
 
   const navigate = useNavigate()
 
+  // when user value changes (retrieved from context), navigate to fitness when user is present, else navigate to public landing page
   useEffect(() => {
     if (user && Object.keys(user).length > 0) {
       navigate("/fitness")
@@ -20,6 +21,7 @@ const Layout = () => {
 
   return (
     <SimpleGrid maxW="1200px" m="auto">
+      {/* Register modal is triggered when Create Account button on landing page is clicked */}
       {showRegisterModal && <Register />}
       <Navbar />
       <Outlet />

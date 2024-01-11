@@ -1,4 +1,4 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, VStack } from '@chakra-ui/react'
+import { Button, ButtonGroup, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, VStack } from '@chakra-ui/react'
 import { useGlobalContext } from '../context/GlobalContext.jsx'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -17,6 +17,7 @@ const Register = () => {
     },
     onSubmit: async (values) => {
       register(values)
+      setShowRegisterModal()
       formik.resetForm()
     },
     validationSchema: Yup.object({
@@ -32,7 +33,7 @@ const Register = () => {
     <Modal isOpen={showRegisterModal} onClose={setShowRegisterModal}>
       <ModalOverlay>
         <ModalContent>
-          <ModalHeader>
+          <ModalHeader textAlign="center" fontSize="32px">
             Register
           </ModalHeader>
           <ModalBody>
@@ -105,8 +106,11 @@ const Register = () => {
                   />
                   <FormErrorMessage>{formik.errors.passwordConfirm}</FormErrorMessage>
                 </FormControl>
+                <ButtonGroup>
+                  <Button type="submit">Submit</Button>
+                  <Button type="click" onClick={setShowRegisterModal}>Cancel</Button>
+                </ButtonGroup>
 
-                <Button type="submit">Submit</Button>
               </VStack>
             </form>
           </ModalBody>

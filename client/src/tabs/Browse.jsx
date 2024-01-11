@@ -7,9 +7,12 @@ const Browse = ({ onSetSearchFields }) => {
 
   const [values, setValues] = useState({})
 
+  // set values dynamically based on property name which is sent unchanged to back end
   const handleChange = (value, action) => {
     setValues({ ...values, [action.name]: value.value })
   }
+
+  // when local values state is updated, onSetSearchFields (passed from Fitness) triggers back end call with values
   useEffect(() => {
     onSetSearchFields(values)
   }, [values])

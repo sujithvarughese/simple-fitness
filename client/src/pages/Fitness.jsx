@@ -1,29 +1,35 @@
-import FindWorkouts from '../components/FindWorkouts.jsx'
-import WorkoutList from '../components/WorkoutList.jsx'
 import { useGlobalContext } from '../context/GlobalContext.jsx'
 import { useEffect, useState } from 'react'
 import connect from '../utils/connect.js'
-import Error from './Error.jsx'
-import { Box, Card, Container, Heading, Image, SimpleGrid, Text, VStack } from '@chakra-ui/react'
+import { Card, Heading, Image, SimpleGrid, VStack } from '@chakra-ui/react'
+import FindWorkouts from '../tabs/FindWorkouts.jsx'
+import WorkoutList from '../components/WorkoutList.jsx'
 import smallStepsBannerImg from "../assets/images/small-steps-banner.jpeg"
-import weightsBg from "../assets/images/weights-bg.jpeg"
-import dumbbellBg from "../assets/images/dumbbell-bg.jpeg"
-import fitnessEquipBg from "../assets/images/fitness-equip-bg.jpeg"
 import fitnessBg from "../assets/images/fitness-bg.jpeg"
 
+// root page for workouts loaded on login
 const Fitness = () => {
 
   const { user } = useGlobalContext()
 
+  // search parameters selected by user
   const [values, setValues] = useState({})
+  // passed down function that sets local state
+  const onSetSearchFields = searchFields => setValues(searchFields)
+
+  // array of workouts based on user selections
+  // passed down to Favorites which sets workouts when selected
   const [results, setResults] = useState([])
 
+  // On tab change, clear workouts that were displayed and previous search inputs
+  // passed down to FindWorkouts
   const clear = () => {
     setValues({})
     setResults([])
   }
-  const onSetSearchFields = searchFields => setValues(searchFields)
+
   const fetchWorkouts = async () => {
+    // if no values (additional protection in useEffect)
     if (Object.keys(values).length === 0) {
       return
     }
@@ -31,15 +37,15 @@ const Fitness = () => {
       const response = await connect("/workouts", {
         params: {  ...values }
       })
+      // workouts = [{ workout }, ... ]
       const { workouts } = response.data
       setResults(workouts)
-      console.log(workouts)
     } catch (error) {
       throw new Error(error)
     }
   }
 
-
+  // when values is changed by function passed through props is called, back-end call to get matching workouts
   useEffect(() => {
     if (values === null) {
       return
@@ -47,6 +53,10 @@ const Fitness = () => {
     fetchWorkouts()
   }, [values])
 
+  // scroll to top of page on load
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
   return (
     <SimpleGrid>
       <SimpleGrid
@@ -76,6 +86,7 @@ const Fitness = () => {
           marginBottom="10"
           width={{ base: "97%", md: "800px"}}
         >
+          {/* tabbed display where user finds workouts. Browse and Search tabs set search state which is updated in this component state */}
           <FindWorkouts
             onSetSearchFields={onSetSearchFields}
             setResults={setResults}
@@ -83,13 +94,13 @@ const Fitness = () => {
           />
 
           {
+            // when above search fields are changed, new list of workouts is rendered
+            // Favorites tab does not use this components search fields state; Results are directly manipulated from Favorites
             results.length > 0 &&
               <WorkoutList workouts={results} />
           }
         </Card>
       </VStack>
-
-
     </SimpleGrid>
   )
 }
