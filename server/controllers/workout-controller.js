@@ -28,7 +28,7 @@ const toggleFavorites = async (req, res) => {
 
 const getWorkoutsFromDB = async (req, res) => {
     try {
-        const workouts = await Workout.find(req.query).limit(15)
+        const workouts = await Workout.find(req.query).limit(13)
         const randomizedWorkouts = workouts.sort(() => Math.random() - 0.5)
         res.send({
             msg: "success",
