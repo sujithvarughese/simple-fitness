@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, ButtonGroup, Container, Flex, Heading, Image, SimpleGrid, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Container, Flex, Heading, Image, SimpleGrid, Spacer, Text, VStack } from '@chakra-ui/react'
 import fitnessTextImg from "../assets/images/fitness-text.png"
 import keepThingsSimpleImg from "../assets/images/keep-things-simple-noBg.png"
 import gymBagBannerImg from "../assets/images/gym-bag-banner.jpeg"
@@ -27,8 +27,6 @@ const Landing = () => {
     <VStack>
       <SimpleGrid>
         <Image src={start2024Img}></Image>
-
-
         <SimpleGrid
           height="360px"
           fontSize="28px"
@@ -42,7 +40,7 @@ const Landing = () => {
           bgSize="cover"
           position="relative"
         >
-          <Text>Thousands of workouts.</Text>
+          <Heading>Thousands of workouts.</Heading>
         </SimpleGrid>
 
         <Flex
@@ -52,18 +50,17 @@ const Landing = () => {
           width="100%"
           color="black"
           placeItems="center"
-          paddingLeft="2"
-          paddingRight="40"
           bgImage={dumbbellBanner}
           bgSize="cover"
+          bgPosition="left"
         >
 
           <Image
             src={previewWorkoutImg}
-            width="320px"
+            width={{ base: "240px", lg: "320px"}}
           >
           </Image>
-          <Text>Detailed Animated Images.</Text>
+          <Heading>Detailed<Spacer display={{ lg: "none" }}/> Animated<Spacer display={{ lg: "none" }}/> Images.</Heading>
         </Flex>
 
         <SimpleGrid>
@@ -84,7 +81,7 @@ const Landing = () => {
 
 
 
-      <ButtonGroup>
+      <ButtonGroup size="lg" colorScheme="blackAlpha" variant="outline">
         <Button onClick={previewAsGuest}>Preview Site</Button>
         <Button onClick={setShowRegisterModal}>Create Account</Button>
       </ButtonGroup>

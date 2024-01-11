@@ -18,7 +18,7 @@ const Search = ({ onSetSearchFields }) => {
   }
 
   return (
-    <Box>
+    <Box textTransform="capitalize">
         <FormLabel htmlFor="query">Name</FormLabel>
         <AsyncSelect
           id="query"

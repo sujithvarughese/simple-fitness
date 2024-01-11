@@ -5,18 +5,47 @@ const compoundBodyPartsList = ['back', 'cardio', 'chest', 'upper legs', 'waist']
 const targetList = ['abductors', 'abs', 'adductors', 'biceps', 'calves', 'cardiovascular system', 'delts', 'forearms', 'glutes', 'hamstrings', 'lats', 'levator scapulae', 'pectorals', 'quads', 'serratus anterior', 'spine', 'traps', 'triceps', 'upper back']
 const equipmentList = ['band', 'barbell', 'body weight', 'cable', 'dumbbell', 'resistance band', 'rope', 'smith machine', 'stationary bike', 'weighted']
 
-const targetListSelect = targetList.map(target => {
+const targetListConvert = targetList.map(target => {
   return { label: target,  value: target }
 })
-const bodyPartsListSelect = bodyPartsList.map(bodyPart => {
-  return { label: bodyPart,  value: bodyPart }
+const bodyPartsListConvert = bodyPartsList.map(bodyPart => {
+  return  { label: bodyPart.substring(0,1).toUpperCase() + bodyPart.substring(1),  value: bodyPart }
 })
-const compoundBodyPartsListSelect = compoundBodyPartsList.map(compoundBodyPart => {
+const compoundBodyPartsListConvert = compoundBodyPartsList.map(compoundBodyPart => {
   return { label: compoundBodyPart,  value: compoundBodyPart }
 })
-const equipmentListSelect = equipmentList.map(equipment => {
-  return { label: equipment,  value: equipment }
+const equipmentListConvert = equipmentList.map(equipment => {
+  return { label: equipment.substring(0,1).toUpperCase() + equipment.substring(1),  value: equipment }
 })
-const levelListSelect = [{ label: "beginner", value: 1 }, { label: "intermediate", value: 2 }, { label: "expert", value: 3 } ]
 
-export { bodyPartsListSelect, compoundBodyPartsListSelect, equipmentListSelect, levelListSelect }
+const bodyPartsListSelect = [
+  { label: 'Back', value: 'back' },
+  { label: 'Cardio', value: 'cardio' },
+  { label: 'Chest', value: 'chest' },
+  { label: 'Neck', value: 'neck' },
+  { label: 'Shoulders', value: 'shoulders' },
+  { label: 'Arms', value: 'upper arms' },
+  { label: 'Legs', value: 'upper legs' },
+  { label: 'Waist', value: 'waist' }
+]
+
+const equipmentListSelect = [
+  { label: 'Band', value: 'band' },
+  { label: 'Barbell', value: 'barbell' },
+  { label: 'Body Weight', value: 'body weight' },
+  { label: 'Cable', value: 'cable' },
+  { label: 'Dumbbell', value: 'dumbbell' },
+  { label: 'Resistance Band', value: 'resistance band' },
+  { label: 'Rope', value: 'rope' },
+  { label: 'Smith Machine', value: 'smith machine' },
+  { label: 'Stationary Bike', value: 'stationary bike' },
+  { label: 'Weighted', value: 'weighted' }
+]
+
+const levelListSelect = [
+  { label: "Beginner", value: 1 },
+  { label: "Intermediate", value: 2 },
+  { label: "Expert", value: 3 }
+]
+
+export { bodyPartsListSelect, equipmentListSelect, levelListSelect }

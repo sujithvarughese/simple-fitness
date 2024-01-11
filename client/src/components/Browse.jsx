@@ -40,11 +40,11 @@ const Browse = ({ onSetSearchFields }) => {
           </FormControl>
 
           <FormControl>
-            <FormLabel htmlFor="bodyPart">Experience Level</FormLabel>
+            <FormLabel htmlFor="level">Experience Level</FormLabel>
             <Select
               name="level"
               id="level"
-              type="number"
+              type="text"
               onChange={handleChange}
               options={levelListSelect}
             />

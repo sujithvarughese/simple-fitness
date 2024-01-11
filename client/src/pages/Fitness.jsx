@@ -33,6 +33,7 @@ const Fitness = () => {
       })
       const { workouts } = response.data
       setResults(workouts)
+      console.log(workouts)
     } catch (error) {
       throw new Error(error)
     }
@@ -87,10 +88,8 @@ const Fitness = () => {
           />
 
           {
-            results.length > 0 ?
+            results.length > 0 &&
               <WorkoutList workouts={results} />
-              :
-              <Text>No Workouts to Show</Text>
           }
         </Card>
       </VStack>

@@ -18,8 +18,7 @@ const WorkoutSchema = new mongoose.Schema({
     required: true,
   },
   target: {
-    type: Boolean,
-    default: false
+    type: String,
   },
   secondaryMuscles: {
     type: String,

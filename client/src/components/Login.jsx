@@ -36,8 +36,7 @@ const Login = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
                   onChange={formik.handleChange}
-                  size="sm"
-                  variant="filled"
+                  size={{ base: "sm", md: "md" }}
                 />
               </FormControl>
               <FormControl isInvalid={formik.errors.password && formik.touched.password}>
@@ -49,7 +48,7 @@ const Login = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
                   onChange={formik.handleChange}
-                  size="sm"
+                  size={{ base: "sm", md: "md" }}
                 />
               </FormControl>
             </VStack>
@@ -58,7 +57,8 @@ const Login = () => {
           <Button
             type="submit"
             loadingText="Logging In..."
-            width="200px"
+            size={{ base: "sm", md: "md"}}
+
           >Log In
           </Button>
         </HStack>

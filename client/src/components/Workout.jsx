@@ -60,6 +60,7 @@ const Workout = ({
                       bgColor="white"
                       color="#B22222"
                       margin="4"
+                      _hover={{ color: "#fecea8", cursor: "pointer" }}
                     />
                     :
                     <IconButton
@@ -68,12 +69,10 @@ const Workout = ({
                       onClick={toggleFavorite}
                       bgColor="white"
                       margin="4"
+                      _hover={{ color: "#B22222", cursor: "pointer" }}
                     />
                 )
               }
-
-
-
             </Flex>
 
 

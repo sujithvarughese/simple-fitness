@@ -2,6 +2,7 @@ import { Flex, Heading, Box, Button, Text, Spacer, HStack, Image } from '@chakra
 import Login from './Login.jsx'
 import { useGlobalContext } from '../context/GlobalContext.jsx'
 import fitnessTextImg from "../assets/images/fitness-text.png"
+import fitnessTextInvertedImg from "../assets/images/fitness-text-inverted.png"
 import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
@@ -23,14 +24,20 @@ const Navbar = () => {
             bg={user ? "white" : "#1a1b21"}
             color={user ? "black" : "white"}
     >
-      <Heading>{user ?
+      <Heading>
+        {user ?
         <Image
           src={fitnessTextImg}
           margin="-2"
           width="200px"
         ></Image>
         :
-        "SF"}
+        <Image
+          src={fitnessTextInvertedImg}
+          margin="-2"
+          width="200px"
+        ></Image>
+        }
       </Heading>
       {
         user ?
@@ -41,7 +48,7 @@ const Navbar = () => {
           :
           <Box>
             <Login />
-            <Text>Don't have an Account? <button type="click" onClick={setShowRegisterModal}>Register</button></Text>
+
           </Box>
 
       }
