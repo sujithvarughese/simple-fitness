@@ -23,8 +23,8 @@ app.use(cors({
     credentials: true,
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"]
 }));
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(bodyParser.json({ limit: '20mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '20mb' }));
 app.use(bodyParserErrorHandler());
 app.use(express.json())
 app.use(cookieParser(process.env.JWT_SECRET));
