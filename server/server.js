@@ -19,7 +19,7 @@ const port = process.env.PORT || 8800
 dotenv.config()
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://simpler-fitness.netlify.app"],
     credentials: true,
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"]
 }));
