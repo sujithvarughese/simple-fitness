@@ -10,7 +10,7 @@ import {
 	SHOW_REGISTER_MODAL,
 	SET_FAVORITES
 } from "./actions.js";
-import connect from '../utils/connect.js'
+import { db } from '../utils/db.js'
 
 const initialState = {
 	user: null,
@@ -28,7 +28,7 @@ const GlobalProvider = ({ children }) => {
 
 	const register = async (credentials) => {
 		try {
-			const response = await connect.post("/auth/register", credentials)
+			const response = await db.post("/auth/register", credentials)
 			// user = { userID: _id, isAdmin: isAdmin }
 			const { user } = response.data
 			dispatch({
@@ -48,7 +48,7 @@ const GlobalProvider = ({ children }) => {
 	}
 	const login = async (credentials) => {
 		try {
-			const response = await connect.post("/auth/login", credentials)
+			const response = await db.post("/auth/login", credentials)
 			const { user, favorites } = response.data
 			dispatch({
 				type: LOGIN_USER,
@@ -59,7 +59,7 @@ const GlobalProvider = ({ children }) => {
 		}
 	}
 	const logout = async () => {
-		await connect("/auth/logout");
+		await db("/auth/logout");
 		dispatch({ type: LOGOUT_USER });
 	}
 

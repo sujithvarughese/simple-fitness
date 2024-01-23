@@ -1,7 +1,7 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Card, CardBody, CardHeader, Flex, Heading, Icon, IconButton, Image, ListItem, OrderedList, SimpleGrid, Text, VStack } from '@chakra-ui/react'
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { useGlobalContext } from '../context/GlobalContext.jsx'
-import connect from '../utils/connect.js'
+import { db } from '../utils/db.js'
 
 // this component returns a Card with workout information using props passed from WorkoutList
 const Workout = ({ _id, image, name, target, instructions }) => {
@@ -14,7 +14,7 @@ const Workout = ({ _id, image, name, target, instructions }) => {
   // function calls back end to add or remove workout based on _id
   const toggleFavorite = async () => {
     try {
-      const response = await connect.patch("/workouts", { id: _id })
+      const response = await db.patch("/workouts", { id: _id })
       const { favorites } = response.data
       // favorites from response is an array of updated favorites, which is then updated in global state
       setFavorites(favorites)

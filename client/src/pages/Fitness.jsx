@@ -1,16 +1,17 @@
 import { useGlobalContext } from '../context/GlobalContext.jsx'
-import { useEffect, useState } from 'react'
-import connect from '../utils/connect.js'
+import React, { useEffect, useRef, useState } from 'react'
+import { db, getWorkoutsPage } from '../utils/db.js'
 import { Card, Heading, Image, Progress, SimpleGrid, VStack } from '@chakra-ui/react'
 import FindWorkouts from '../tabs/FindWorkouts.jsx'
-import WorkoutList from '../components/WorkoutList.jsx'
 import smallStepsBannerImg from "../assets/images/small-steps-banner.jpeg"
 import fitnessBg from "../assets/images/fitness-bg.jpeg"
 import fitnessBgFull from "../assets/images/fitness-bg-full.jpeg"
+import Workout from '../components/Workout.jsx'
 // root page for workouts loaded on login
 const Fitness = () => {
 
   const { user } = useGlobalContext()
+
 
   // search parameters selected by user
   const [values, setValues] = useState({})
@@ -38,7 +39,7 @@ const Fitness = () => {
     }
     try {
       setIsLoading(true)
-      const response = await connect("/workouts", {
+      const response = await db("/workouts", {
         params: {  ...values }
       })
       // workouts = [{ workout }, ... ]
@@ -50,6 +51,17 @@ const Fitness = () => {
       setIsLoading(false)
     }
   }
+
+  const lastPostRef = useRef()
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries, observe) => {
+      const entry = entries[0]
+      if (entry.isIntersecting) {
+        console.log("infinite scroll intersection")
+      }
+    })
+  }, [])
+
 
   // when values is changed by function passed through props is called, back-end call to get matching workouts
   useEffect(() => {
@@ -63,6 +75,8 @@ const Fitness = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, []);
+
+
   return (
     <SimpleGrid>
       <SimpleGrid
@@ -103,7 +117,19 @@ const Fitness = () => {
             // when above search fields are changed, new list of workouts is rendered
             // Favorites tab does not use this components search fields state; Results are directly manipulated from Favorites
             results.length > 0 &&
-              <WorkoutList workouts={results} />
+            <VStack bgColor="#1a1b21">
+              {
+                results?.map((workout, index) => {
+                  if (results.length === index + 1) {
+                    return <Workout key={workout.id} { ...workout }/>
+                  }
+                  return <Workout key={workout.id} { ...workout }/>
+
+                }
+
+                )
+              }
+            </VStack>
           }
 
         </Card>
