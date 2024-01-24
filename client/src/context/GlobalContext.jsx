@@ -10,7 +10,7 @@ import {
 	SHOW_REGISTER_MODAL,
 	SET_FAVORITES
 } from "./actions.js";
-import { db } from '../utils/db.js'
+import db from '../utils/db.js'
 
 const initialState = {
 	user: null,

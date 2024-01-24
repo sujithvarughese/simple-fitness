@@ -26,7 +26,7 @@ const FindWorkouts = ({ onSetSearchFields, setResults, clear }) => {
               </TabPanel>
 
               <TabPanel>
-                <Browse onSetSearchFields={onSetSearchFields}/>
+                <Browse onSetSearchFields={onSetSearchFields} setResults={setResults}/>
               </TabPanel>
 
               <TabPanel>

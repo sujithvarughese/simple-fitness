@@ -17,18 +17,5 @@ db.interceptors.response.use(
   }
 );
 
-const getWorkoutsPage = async (pageNumber=1, options) => {
-  if (!options) return
-  try {
-    const response = await db(`"/workouts/?page=${pageNumber}`, {
-      params: options
-    })
-    const { workouts } = response.data
-    return workouts
-  } catch (error) {
-    throw new Error(error)
-  }
-}
 
-
-export { db, getWorkoutsPage }
+export default db

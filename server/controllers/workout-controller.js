@@ -27,11 +27,10 @@ const toggleFavorites = async (req, res) => {
 
 
 const getWorkoutsFromDB = async (req, res) => {
-    console.log(req.query)
+    let page = req.query.page
     let limit = 10
-
     try {
-        const workouts = await Workout.find(req.query).limit(limit)
+        const workouts = await Workout.find(req.query.values).skip(page * limit).limit(limit)
         res.send({
             msg: "success",
             workouts: workouts

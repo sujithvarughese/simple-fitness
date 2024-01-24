@@ -1,10 +1,11 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Card, CardBody, CardHeader, Flex, Heading, Icon, IconButton, Image, ListItem, OrderedList, SimpleGrid, Text, VStack } from '@chakra-ui/react'
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { useGlobalContext } from '../context/GlobalContext.jsx'
-import { db } from '../utils/db.js'
+import db from '../utils/db.js'
+import { forwardRef } from 'react'
 
 // this component returns a Card with workout information using props passed from WorkoutList
-const Workout = ({ _id, image, name, target, instructions }) => {
+const Workout = forwardRef(({ _id, image, name, target, instructions }, ref) => {
 
   const { user, favorites, setFavorites } = useGlobalContext()
 
@@ -22,6 +23,8 @@ const Workout = ({ _id, image, name, target, instructions }) => {
       throw new Error(error)
     }
   }
+  const refExists = ref
+
   // a few workouts in database do not have a gif, return to avoid reference error
   if (!image) return
 
@@ -37,7 +40,7 @@ const Workout = ({ _id, image, name, target, instructions }) => {
             // render filled heart if on favorites list, unfilled if not
             isFavorite ?
               <IconButton
-                as={MdFavorite}
+                icon={<MdFavorite />}
                 aria-label="Unfavorite"
                 onClick={toggleFavorite}
                 bgColor="white"
@@ -47,7 +50,7 @@ const Workout = ({ _id, image, name, target, instructions }) => {
               />
               :
               <IconButton
-                as={MdFavoriteBorder}
+                icon={<MdFavoriteBorder />}
                 aria-label="Favorite"
                 onClick={toggleFavorite}
                 bgColor="white"
@@ -76,9 +79,9 @@ const Workout = ({ _id, image, name, target, instructions }) => {
 
         </CardBody>
       </SimpleGrid>
-
+      {refExists && <article ref={ref}></article>}
     </Card>
   );
-};
+});
 
 export default Workout;

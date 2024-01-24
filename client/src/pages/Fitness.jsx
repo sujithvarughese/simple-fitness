@@ -1,7 +1,7 @@
 import { useGlobalContext } from '../context/GlobalContext.jsx'
-import React, { useEffect, useRef, useState } from 'react'
-import { db, getWorkoutsPage } from '../utils/db.js'
-import { Card, Heading, Image, Progress, SimpleGrid, VStack } from '@chakra-ui/react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import db from '../utils/db.js'
+import { Box, Card, Heading, Image, Progress, SimpleGrid, VStack } from '@chakra-ui/react'
 import FindWorkouts from '../tabs/FindWorkouts.jsx'
 import smallStepsBannerImg from "../assets/images/small-steps-banner.jpeg"
 import fitnessBg from "../assets/images/fitness-bg.jpeg"
@@ -12,12 +12,15 @@ const Fitness = () => {
 
   const { user } = useGlobalContext()
 
-
   // search parameters selected by user
   const [values, setValues] = useState({})
 
+  // page number for paginated results
+  const [pageNumber, setPageNumber] = useState(1)
+
   // for progress bar, controlled in fetch function
   const [isLoading, setIsLoading] = useState(false)
+
   // passed down function that sets local state
   const onSetSearchFields = searchFields => setValues(searchFields)
 
@@ -39,12 +42,11 @@ const Fitness = () => {
     }
     try {
       setIsLoading(true)
-      const response = await db("/workouts", {
-        params: {  ...values }
+      const response = await db(`/workouts/?page=${pageNumber}`, {
+        params: { values }
       })
-      // workouts = [{ workout }, ... ]
       const { workouts } = response.data
-      setResults(workouts)
+      setResults([...results, ...workouts])
     } catch (error) {
       throw new Error(error)
     } finally {
@@ -52,24 +54,32 @@ const Fitness = () => {
     }
   }
 
-  const lastPostRef = useRef()
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries, observe) => {
-      const entry = entries[0]
-      if (entry.isIntersecting) {
-        console.log("infinite scroll intersection")
+  // ref placed on an element to indicate end of current results
+  const intObserver = useRef()
+
+  const lastResultRef = useCallback(intersection => {
+    if (isLoading) return
+    if (intObserver.current) {
+      intObserver.current.disconnect()
+    }
+    intObserver.current = new IntersectionObserver(intersections => {
+      if (intersections[0].isIntersecting) {
+        setPageNumber(prevState => prevState + 1)
       }
     })
+    if (intersection) intObserver.current.observe(intersection)
   }, [])
 
-
-  // when values is changed by function passed through props is called, back-end call to get matching workouts
+  // set pageNumber to 1 if values changes since fetched workouts are added to results array
   useEffect(() => {
-    if (values === null) {
-      return
-    }
-    fetchWorkouts()
+    setPageNumber(1)
   }, [values])
+
+  // when values or pageNumber is changed by function passed through props is called, back-end call to get matching workouts
+  useEffect(() => {
+    fetchWorkouts()
+  }, [values, pageNumber])
+
 
   // scroll to top of page on load
   useEffect(() => {
@@ -119,13 +129,15 @@ const Fitness = () => {
             results.length > 0 &&
             <VStack bgColor="#1a1b21">
               {
-                results?.map((workout, index) => {
-                  if (results.length === index + 1) {
-                    return <Workout key={workout.id} { ...workout }/>
-                  }
-                  return <Workout key={workout.id} { ...workout }/>
+                results?.map((workout, index) =>
 
-                }
+                  index + 1 === results.length ?
+                    <Workout key={workout.id} ref={lastResultRef} { ...workout }/>
+                    :
+                    <Workout key={workout.id} { ...workout }/>
+
+
+
 
                 )
               }
@@ -133,7 +145,10 @@ const Fitness = () => {
           }
 
         </Card>
+
+
       </VStack>
+      <Progress size="lg" isIndeterminate={isLoading}/>
     </SimpleGrid>
   )
 }

@@ -3,12 +3,13 @@ import { bodyPartsListSelect, equipmentListSelect, levelListSelect } from '../da
 import Select from 'react-select'
 import { useEffect, useState } from 'react'
 
-const Browse = ({ onSetSearchFields }) => {
+const Browse = ({ onSetSearchFields, setResults }) => {
 
   const [values, setValues] = useState({})
 
   // set values dynamically based on property name which is sent unchanged to back end
   const handleChange = (value, action) => {
+    setResults([])
     setValues({ ...values, [action.name]: value.value })
   }
 
