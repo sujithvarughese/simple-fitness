@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import db from '../utils/db.js'
+
+// not in use -> see Fitness.jsx for api calls
 const useWorkouts = () => {
 
   const [values, setValues] = useState({})

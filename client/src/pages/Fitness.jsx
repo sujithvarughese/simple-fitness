@@ -7,6 +7,7 @@ import smallStepsBannerImg from "../assets/images/small-steps-banner.jpeg"
 import fitnessBg from "../assets/images/fitness-bg.jpeg"
 import fitnessBgFull from "../assets/images/fitness-bg-full.jpeg"
 import Workout from '../components/Workout.jsx'
+
 // root page for workouts loaded on login
 const Fitness = () => {
 
@@ -130,23 +131,16 @@ const Fitness = () => {
             <VStack bgColor="#1a1b21">
               {
                 results?.map((workout, index) =>
-
+                  // place ref in last element for intersection observer
                   index + 1 === results.length ?
                     <Workout key={workout.id} ref={lastResultRef} { ...workout }/>
                     :
                     <Workout key={workout.id} { ...workout }/>
-
-
-
-
                 )
               }
             </VStack>
           }
-
         </Card>
-
-
       </VStack>
       <Progress size="lg" isIndeterminate={isLoading}/>
     </SimpleGrid>
