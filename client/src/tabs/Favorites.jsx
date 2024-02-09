@@ -4,11 +4,9 @@ import Select from 'react-select'
 import { useEffect, useState } from 'react'
 import { bodyPartsListSelect } from '../data.js'
 import useWorkouts from '../hooks/useWorkouts.js'
-const Favorites = () => {
+const Favorites = ({ setResults }) => {
 
   const { favorites } = useGlobalContext()
-
-  const { setResults } = useWorkouts()
 
   // use local state to control results when user filters favorites by target area
   const [filteredFavorites, setFilteredFavorites] = useState(favorites)

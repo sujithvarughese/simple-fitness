@@ -17,7 +17,7 @@ const Fitness = () => {
   const [values, setValues] = useState({})
 
   // page number for paginated results
-  const [pageNumber, setPageNumber] = useState(1)
+  const [pageNumber, setPageNumber] = useState(0)
 
   // for progress bar, controlled in fetch function
   const [isLoading, setIsLoading] = useState(false)
@@ -71,9 +71,9 @@ const Fitness = () => {
     if (intersection) intObserver.current.observe(intersection)
   }, [])
 
-  // set pageNumber to 1 if values changes since fetched workouts are added to results array
+  // set pageNumber to 0 if values changes since fetched workouts are added to results array
   useEffect(() => {
-    setPageNumber(1)
+    setPageNumber(0)
   }, [values])
 
   // when values or pageNumber is changed by function passed through props is called, back-end call to get matching workouts
