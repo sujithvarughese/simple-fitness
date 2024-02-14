@@ -8,6 +8,8 @@ const Favorites = ({ setResults }) => {
 
   const { favorites } = useGlobalContext()
 
+  // filter for favorites section -> not in use
+/*
   // use local state to control results when user filters favorites by target area
   const [filteredFavorites, setFilteredFavorites] = useState(favorites)
 
@@ -29,19 +31,14 @@ const Favorites = ({ setResults }) => {
   useEffect(() => {
     setResults(filteredFavorites)
   }, [filteredFavorites])
+*/
+  useEffect(() => {
+    setResults(favorites)
+  }, [favorites])
 
   return (
     <div>
-      <FormControl>
-        <FormLabel htmlFor="bodyPart">Target Body Part</FormLabel>
-        <Select
-          name="bodyPart"
-          id="bodyPart"
-          type="text"
-          onChange={handleChange}
-          options={bodyPartsListSelect}
-        />
-      </FormControl>
+
     </div>
   )
 }
