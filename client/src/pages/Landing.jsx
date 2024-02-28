@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Flex, Heading, Image, SimpleGrid, Spacer, VStack } from '@chakra-ui/react'
+import { Button, ButtonGroup, Flex, Heading, Image, keyframes, SimpleGrid, Spacer, VStack } from '@chakra-ui/react'
 import { useGlobalContext } from '../context/GlobalContext.jsx'
 import fitnessTextImg from "../assets/images/fitness-text.png"
 import keepThingsSimpleImg from "../assets/images/keep-things-simple-noBg.png"
@@ -31,6 +31,13 @@ const Landing = () => {
       setGuestLoginLoading(false)
     }
   }
+
+  const glow = keyframes`
+    0% { border: 2px black solid }
+    50% { border: 2px orange solid }
+    100% { border: 2px black solid }
+  `
+  const glowAnimation = `${glow} infinite 1.5s ease-in-out`
 
   return (
     <VStack>
@@ -93,10 +100,11 @@ const Landing = () => {
         <Button
           onClick={previewAsGuest}
           isLoading={guestLoginLoading}
+          animation={glowAnimation}
         >Preview Site
         </Button>
         {/* toggle modal function from context / rendered from Layout */}
-        <Button onClick={setShowRegisterModal}>Create Account</Button>
+        <Button animation={glowAnimation} onClick={setShowRegisterModal}>Create Account</Button>
       </ButtonGroup>
 
       <SimpleGrid

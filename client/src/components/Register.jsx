@@ -56,7 +56,6 @@ const Register = () => {
                     id="firstName"
                     name="firstName"
                     type="text"
-                    placeholder="First Name"
                     onBlur={formik.handleBlur}
                     value={formik.values.firstName}
                     onChange={formik.handleChange}
@@ -70,7 +69,6 @@ const Register = () => {
                     id="lastName"
                     name="lastName"
                     type="text"
-                    placeholder="Last Name"
                     onBlur={formik.handleBlur}
                     value={formik.values.lastName}
                     onChange={formik.handleChange}
@@ -84,7 +82,6 @@ const Register = () => {
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="Email"
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
                     onChange={formik.handleChange}
@@ -97,7 +94,6 @@ const Register = () => {
                     id="password"
                     name="password"
                     type="password"
-                    placeholder="Password"
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
                     onChange={formik.handleChange}
@@ -110,7 +106,6 @@ const Register = () => {
                     id="passwordConfirm"
                     name="passwordConfirm"
                     type="password"
-                    placeholder="Confirm Password"
                     onBlur={formik.handleBlur}
                     value={formik.values.passwordConfirm}
                     onChange={formik.handleChange}
