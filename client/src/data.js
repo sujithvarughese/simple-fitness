@@ -47,5 +47,20 @@ const levelListSelect = [
   { label: "Intermediate", value: 2 },
   { label: "Expert", value: 3 }
 ]
+const levelListSelectText = [
+  { label: "Beginner", value: "beginner" },
+  { label: "Intermediate", value: "intermediate" },
+  { label: "Expert", value: "expert" }
+]
+const genderListSelect = [
+  { label: "Male", value: "male" },
+  { label: "Female", value: "female" },
+]
 
-export { bodyPartsListSelect, equipmentListSelect, levelListSelect }
+const focusListSelect = [
+  { label: "Strength Training", value: "strength training" },
+  { label: "Cardio", value: "cardio" },
+  { label: "Strength Training & Cardio", value: "strength training and cardio" }
+
+]
+export { bodyPartsListSelect, equipmentListSelect, levelListSelect, levelListSelectText, genderListSelect, focusListSelect }

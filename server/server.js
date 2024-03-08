@@ -12,6 +12,7 @@ import notFound from "./middleware/not-found.js";
 import { authenticateUser, authorizePermissions } from "./middleware/authentication.js";
 import authRouter from './routes/auth-router.js'
 import workoutRouter from "./routes/workout-router.js";
+import aiRouter from './routes/ai-router.js'
 import { connectDatabase } from "./controllers/workout-controller.js";
 
 const app = express()
@@ -41,6 +42,7 @@ app.get("/api/v1", (req, res) => {
 })
 app.use("/api/v1/auth", authRouter);  // login, logout, register
 app.use("/api/v1/workouts", workoutRouter)
+app.use("/api/v1/ai", aiRouter)
 
 app.use(notFound);
 app.use(errorHandler);

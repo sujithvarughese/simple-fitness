@@ -1,97 +1,139 @@
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { Button, FormControl, FormLabel, Select, TabPanel, VStack } from '@chakra-ui/react'
-import { compoundBodyPartsListSelect, equipmentListSelect, levelListSelect } from '../data.js'
+import { Box, Button, FormControl, FormLabel, Slider, SliderFilledTrack, SliderThumb, SliderTrack, TabPanel, Text, VStack } from '@chakra-ui/react'
+import Select from 'react-select'
+import { genderListSelect, focusListSelect, levelListSelectText } from '../data.js'
+import { useState } from 'react'
+import db from '../utils/db.js'
 
 const Curate = () => {
-  const handleSubmit = values => {
-    console.log(values)
+
+  const [values, setValues] = useState({})
+  const [createdWorkout, setCreatedWorkout] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const fetchCreatedWorkout = async () => {
+    // if no values (additional protection in useEffect)
+    if (Object.keys(values).length === 0) {
+      return
+    }
+    try {
+      setIsLoading(true)
+      const response = await db.post("/ai", { values })
+      const { workout } = response.data
+      setCreatedWorkout(workout)
+      console.log(workout)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const formik = useFormik({
-    initialValues: {
-      compoundBodyPart: "",
-      equipment: "",
-      level: "",
-      time: ""
-    },
-    onSubmit: (values) => {
-      handleSubmit(values)
-      formik.resetForm()
-    },
-    validationSchema: Yup.object({
-      compoundBodyPart: Yup.string().required("Required"),
-      equipment: Yup.string().required("Required"),
-      time: Yup.string().required("Required"),
-    })
-  })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    fetchCreatedWorkout()
+  }
+  const handleChange = (e) => {
+    console.log(e)
+    setValues({ ...values, [e.label]: e.value} )
+  }
   return (
-    <TabPanel>
-      <form>
+    <Box>
+      <VStack>
+        
+      </VStack>
+      <form onSubmit={handleSubmit}>
         <VStack>
           <FormControl>
-            <FormLabel htmlFor="compoundBodyPart">Target Body Part</FormLabel>
-            <Select
-              name="compoundBodyPart"
-              id="compoundBodyPart"
-              type="text"
-              onBlur={formik.handleBlur}
-              value={formik.values.compoundBodyPart}
-              onChange={formik.handleChange}
+            <FormLabel htmlFor="age">Age</FormLabel>
+            <Slider
+              aria-label="slider"
+              name="age"
+              id="age"
+              type="number"
+              value={values.age}
+              min={12}
+              max={110}
+              step={1}
+              onChange={val => setValues({ ...values, age: val})}
             >
-              {
-                compoundBodyPartsListSelect.map((compoundBodyPart, index) => {
-                  return (
-                    <option key={index} value={compoundBodyPart.value}>{compoundBodyPart.label}</option>
-                  )
-                })
-              }
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+            <Text>{values.age}</Text>
+          </FormControl>
+
+          <FormControl>
+            <FormLabel htmlFor="gender">gender</FormLabel>
+            <Select
+              name="gender"
+              id="gender"
+              type="text"
+              value={values.gender}
+              onChange={handleChange}
+              options={genderListSelect}
+            >
             </Select>
           </FormControl>
 
           <FormControl>
-            <FormLabel htmlFor="equipment">Equipment</FormLabel>
-            <Select
-              name="equipment"
-              id="equipment"
-              type="text"
-              onBlur={formik.handleBlur}
-              value={formik.values.equipment}
-              onChange={formik.handleChange}
-            >
-              {
-                equipmentListSelect.map((equipment, index) => {
-                  return (
-                    <option key={index} value={equipment.value}>{equipment.label}</option>
-                  )
-                })
-              }
-            </Select>
-          </FormControl>
-
-          <FormControl>
-            <FormLabel htmlFor="bodyPart">Experience Level</FormLabel>
+            <FormLabel htmlFor="level">Experience Level</FormLabel>
             <Select
               name="level"
               id="level"
               type="text"
-              onBlur={formik.handleBlur}
-              value={formik.values.level}
-              onChange={formik.handleChange}
+              value={values.level}
+              onChange={handleChange}
+              options={levelListSelectText}
             >
-              {
-                levelListSelect.map((level, index) => {
-                  return (
-                    <option key={index} value={level.value}>{level.label}</option>
-                  )
-                })
-              }
             </Select>
           </FormControl>
-          <Button type="submit">Submit</Button>
+
+          <FormControl>
+            <FormLabel htmlFor="time">Time</FormLabel>
+            <Slider
+              aria-label="slider"
+              name="time"
+              id="time"
+              type="number"
+              value={values.time}
+              min={15}
+              max={120}
+              step={1}
+              onChange={val => setValues({ ...values, time: val})}
+            >
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+            <Text>{values.time} minutes</Text>
+          </FormControl>
+
+          <FormControl>
+            <FormLabel htmlFor="focus">Focus</FormLabel>
+            <Select
+              name="focus"
+              id="focus"
+              type="text"
+              value={values.focus}
+              onChange={handleChange}
+              options={focusListSelect}
+            >
+            </Select>
+          </FormControl>
+          <Button type="submit">Create my Workout</Button>
         </VStack>
       </form>
-    </TabPanel>
+
+      <Box>
+        <Text whiteSpace="break-spaces">
+          {createdWorkout}
+        </Text>
+
+      </Box>
+    </Box>
   )
 }
 
