@@ -4,9 +4,17 @@ import { genderListSelect, focusListSelect, levelListSelectText } from '../data.
 import { useState } from 'react'
 import db from '../utils/db.js'
 
+const initialValues = {
+  time: 30,
+  age: 21,
+  gender: { label: "Male", value: "male" },
+  level:  { label: "Beginner", value: "beginner" },
+  focus:  { label: "Strength Training", value: "strength training" }
+
+}
 const Curate = () => {
 
-  const [values, setValues] = useState({})
+  const [values, setValues] = useState(initialValues)
   const [createdWorkout, setCreatedWorkout] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const fetchCreatedWorkout = async () => {
@@ -44,6 +52,25 @@ const Curate = () => {
       <form onSubmit={handleSubmit}>
         <VStack>
           <FormControl>
+            <FormLabel htmlFor="time">Time: {values.time} minutes</FormLabel>
+            <Slider
+              aria-label="slider"
+              name="time"
+              id="time"
+              type="number"
+              value={values.time}
+              min={15}
+              max={120}
+              step={1}
+              onChange={val => setValues({ ...values, time: val})}
+            >
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+          </FormControl>
+          <FormControl>
             <FormLabel htmlFor="age">Age: {values.age}</FormLabel>
             <Slider
               aria-label="slider"
@@ -70,6 +97,7 @@ const Curate = () => {
               id="gender"
               type="text"
               value={values.gender}
+              defaultValue={initialValues.gender}
               onChange={handleChange}
               options={genderListSelect}
             >
@@ -82,32 +110,12 @@ const Curate = () => {
               name="level"
               id="level"
               type="text"
+              defaultValue={initialValues.level}
               value={values.level}
               onChange={handleChange}
               options={levelListSelectText}
             >
             </Select>
-          </FormControl>
-
-          <FormControl>
-            <FormLabel htmlFor="time">Time: {values.time} minutes</FormLabel>
-            <Slider
-              aria-label="slider"
-              name="time"
-              id="time"
-              type="number"
-              value={values.time}
-              min={15}
-              max={120}
-              step={1}
-              onChange={val => setValues({ ...values, time: val})}
-            >
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <SliderThumb />
-            </Slider>
-
           </FormControl>
 
           <FormControl>
