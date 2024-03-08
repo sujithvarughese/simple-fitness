@@ -44,7 +44,7 @@ const Curate = () => {
       <form onSubmit={handleSubmit}>
         <VStack>
           <FormControl>
-            <FormLabel htmlFor="age">Age</FormLabel>
+            <FormLabel htmlFor="age">Age: {values.age}</FormLabel>
             <Slider
               aria-label="slider"
               name="age"
@@ -61,7 +61,6 @@ const Curate = () => {
               </SliderTrack>
               <SliderThumb />
             </Slider>
-            <Text>{values.age}</Text>
           </FormControl>
 
           <FormControl>
@@ -91,7 +90,7 @@ const Curate = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel htmlFor="time">Time</FormLabel>
+            <FormLabel htmlFor="time">Time: {values.time} minutes</FormLabel>
             <Slider
               aria-label="slider"
               name="time"
@@ -108,7 +107,7 @@ const Curate = () => {
               </SliderTrack>
               <SliderThumb />
             </Slider>
-            <Text>{values.time} minutes</Text>
+
           </FormControl>
 
           <FormControl>
