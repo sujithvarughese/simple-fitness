@@ -136,13 +136,13 @@ const Curate = () => {
       </form>
 
 
-      <Box>
+      <Box display="flex" flexDirection="column" gap={5}>
         {
           curatedWorkout?.length > 0 &&
           curatedWorkout.map((workout, index) => {
           return (
             <Box key={index}>
-              <Text>{workout.name}</Text>
+              <Text fontWeight={700} textTransform="capitalize">{workout.name}</Text>
               <Text whiteSpace="break-spaces">{workout.instructions}</Text>
             </Box>
           )

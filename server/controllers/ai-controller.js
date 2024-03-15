@@ -1,5 +1,6 @@
 import { OpenAI } from "openai"
 import dotenv from 'dotenv'
+import Workout from '../models/Workout.js'
 dotenv.config()
 const openai = new OpenAI({ apiKey: process.env.OPEN_AI_KEY })
 
@@ -14,7 +15,7 @@ const fetchCuratedWorkout = async (req, res) => {
       messages: [
         {
           role: "system",
-          content: 'You are a helpful assistant designed generate a daily fitness routine based on age, gender, experience level, time, and workout focus. Provide your responses in JSON format like this { "workouts" :{"name": "the name of the exercise", "instructions": ["step one of workout instructions", "step two of workout instructions", ...]}}'
+          content: 'You are a helpful assistant designed generate a daily fitness routine based on age, gender, experience level, time, and workout focus. Provide your responses in JSON format like this { "workouts" :[{"name": "jumping jacks", "3 sets of 25 reps"}, {"name": "bench press", "instructions": "3 sets of 12 reps"}, ...]}'
         },/*
         {
           role: "user",
@@ -30,7 +31,13 @@ const fetchCuratedWorkout = async (req, res) => {
         },
       ]
     })
-    console.log(response.choices[0].message.content)
+    const aiWorkouts = JSON.parse(response.choices[0].message.content)["workouts"]
+    console.log(aiWorkouts)
+    const updatedAiWorkouts = await Promise.all(aiWorkouts.map(async aiWorkout => {
+      const workoutDetails = await Workout.findOne({ name: aiWorkout.name.toLowerCase() })
+      return { ...aiWorkout, details: workoutDetails}
+    }))
+    console.log(updatedAiWorkouts)
     res.status(200).json({
       workout: response?.choices[0]?.message.content
     })
