@@ -1,5 +1,4 @@
-import { Box, Button, FormControl, FormLabel, Slider, SliderFilledTrack, SliderThumb, SliderTrack, TabPanel, Text, VStack } from '@chakra-ui/react'
-import Select from 'react-select'
+import { Box, Button, FormControl, FormLabel, Radio, RadioGroup, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, TabPanel, Text, VStack } from '@chakra-ui/react'
 import { genderListSelect, focusListSelect, levelListSelectText } from '../data.js'
 import { useState } from 'react'
 import db from '../utils/db.js'
@@ -7,17 +6,17 @@ import db from '../utils/db.js'
 const initialValues = {
   time: 30,
   age: 21,
-  gender: { label: "Male", value: "male" },
-  level:  { label: "Beginner", value: "beginner" },
-  focus:  { label: "Strength Training", value: "strength training" }
+  gender: "male",
+  level:  "beginner",
+  focus:  "strength"
 
 }
 const Curate = () => {
 
   const [values, setValues] = useState(initialValues)
-  const [createdWorkout, setCreatedWorkout] = useState("")
+  const [curatedWorkout, setCuratedWorkout] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const fetchCreatedWorkout = async () => {
+  const fetchCuratedWorkout = async () => {
     // if no values (additional protection in useEffect)
     if (Object.keys(values).length === 0) {
       return
@@ -25,9 +24,9 @@ const Curate = () => {
     try {
       setIsLoading(true)
       const response = await db.post("/ai", { values })
-      const { workout } = response.data
-      setCreatedWorkout(workout)
-      console.log(workout)
+      const responseJSON = JSON.parse(response.data.workout)
+      console.log(responseJSON["workouts"])
+      setCuratedWorkout(responseJSON.workouts)
     } catch (error) {
       console.log(error)
     } finally {
@@ -37,12 +36,12 @@ const Curate = () => {
 
 
   const handleSubmit = (e) => {
+    console.log(values)
     e.preventDefault()
-    fetchCreatedWorkout()
+    fetchCuratedWorkout()
   }
-  const handleChange = (e) => {
-    console.log(e)
-    setValues({ ...values, [e.label]: e.value} )
+  const handleChange = (value, action) => {
+    setValues({ ...values, [action.name]: value.value } )
   }
   return (
     <Box>
@@ -92,54 +91,66 @@ const Curate = () => {
 
           <FormControl>
             <FormLabel htmlFor="gender">gender</FormLabel>
-            <Select
+            <RadioGroup
               name="gender"
-              id="gender"
-              type="text"
               value={values.gender}
-              defaultValue={initialValues.gender}
-              onChange={handleChange}
-              options={genderListSelect}
+              onChange={(e)=>setValues({ ...values, gender: e })}
             >
-            </Select>
+              <Stack>
+                <Radio value="male">Male</Radio>
+                <Radio value="female">Female</Radio>
+              </Stack>
+            </RadioGroup>
           </FormControl>
 
           <FormControl>
             <FormLabel htmlFor="level">Experience Level</FormLabel>
-            <Select
+            <RadioGroup
               name="level"
-              id="level"
-              type="text"
-              defaultValue={initialValues.level}
               value={values.level}
-              onChange={handleChange}
-              options={levelListSelectText}
+              onChange={(e)=>setValues({ ...values, level: e })}
             >
-            </Select>
+              <Stack>
+                <Radio value="beginner">Beginner</Radio>
+                <Radio value="intermediate">Intermediate</Radio>
+                <Radio value="expert">Expert</Radio>
+              </Stack>
+            </RadioGroup>
           </FormControl>
 
           <FormControl>
             <FormLabel htmlFor="focus">Focus</FormLabel>
-            <Select
+            <RadioGroup
               name="focus"
-              id="focus"
-              type="text"
               value={values.focus}
-              onChange={handleChange}
-              options={focusListSelect}
+              onChange={(e)=>setValues({ ...values, focus: e })}
             >
-            </Select>
+              <Stack>
+                <Radio value="strength">Strength</Radio>
+                <Radio value="cardio">Cardio</Radio>
+              </Stack>
+            </RadioGroup>
           </FormControl>
           <Button type="submit">Create my Workout</Button>
         </VStack>
       </form>
 
+
       <Box>
-        <Text whiteSpace="break-spaces">
-          {createdWorkout}
-        </Text>
+        {
+          curatedWorkout?.length > 0 &&
+          curatedWorkout.map((workout, index) => {
+          return (
+            <Box key={index}>
+              <Text>{workout.name}</Text>
+              <Text whiteSpace="break-spaces">{workout.instructions}</Text>
+            </Box>
+          )
+        })}
 
       </Box>
+        
+
     </Box>
   )
 }

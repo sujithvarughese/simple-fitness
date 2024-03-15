@@ -4,25 +4,33 @@ dotenv.config()
 const openai = new OpenAI({ apiKey: process.env.OPEN_AI_KEY })
 
 const fetchCuratedWorkout = async (req, res) => {
+  console.log(req.body.values)
   const { age, gender, level, time, focus } = req.body.values
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      max_tokens: 100,
+      model: "gpt-3.5-turbo-0125",
+      response_format: { "type": "json_object" },
+      max_tokens: 400,
       messages: [
         {
+          role: "system",
+          content: 'You are a helpful assistant designed generate a daily fitness routine based on age, gender, experience level, time, and workout focus. Provide your responses in JSON format like this { "workouts" :{"name": "the name of the exercise", "instructions": ["step one of workout instructions", "step two of workout instructions", ...]}}'
+        },/*
+        {
           role: "user",
-          content: `Create a one day workout for the following profile: 
-           age: ${age}
-           gender: ${gender}
-           experience level: ${level}
-           time: ${time} minutes
-           focus: ${focus}
-
-          `
-        }
+          content: `Create a workout routine using the following parameters: age: 25, gender: male, experience level: intermediate, time: 45 minutes, focus: strength`
+        },
+        {
+          role: "assistant",
+          content: {"Warm-up": ["5 minutes of jogging in place","5 minutes of arm circles", "5 minutes of leg swings"], "Strength Training Circuit": ["3 sets of 10 push-ups", "3 sets of 12 bicep curls with dumbbells", "3 sets of 12 tricep dips", "3 sets of 10 squats with a barbell"], "Core Workout": ["3 sets of 15 crunches", "3 sets of 10 leg raises", "3 sets of 30-second planks"], "Cool Down": ["5 minutes of stretching", "5 minutes of deep breathing"]}
+        },*/
+        {
+          role: "user",
+          content: `Create a workout routine using the following parameters: age:${age}, gender:${gender}, experience level:${level}, time:${time} minutes, focus:${focus}`
+        },
       ]
     })
+    console.log(response.choices[0].message.content)
     res.status(200).json({
       workout: response?.choices[0]?.message.content
     })
