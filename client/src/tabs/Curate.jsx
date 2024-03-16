@@ -61,7 +61,7 @@ const Curate = () => {
               value={values.time}
               min={15}
               max={120}
-              step={1}
+              step={5}
               onChange={val => setValues({ ...values, time: val})}
             >
               <SliderTrack>
