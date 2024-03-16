@@ -34,8 +34,11 @@ const fetchCuratedWorkout = async (req, res) => {
     const aiWorkouts = JSON.parse(response.choices[0].message.content)["workouts"]
     console.log(aiWorkouts)
     const updatedAiWorkouts = await Promise.all(aiWorkouts.map(async aiWorkout => {
-      const workoutDetails = await Workout.findOne({ name:{ $regex: `${aiWorkout.name.substring(0, aiWorkout.name.length - 3).toLowerCase()}` }})
-
+      let workoutDetails = await Workout.findOne({ name:{ $regex: `${aiWorkout.name.substring(0, aiWorkout.name.length - 3).toLowerCase()}` }})
+      if (aiWorkout.name.toLowerCase() === "plank") {
+        console.log("hello")
+        workoutDetails = await Workout.findOne({ name: "power point plank" })
+      }
       return { ...aiWorkout, details: workoutDetails}
     }))
     res.status(200).json({
