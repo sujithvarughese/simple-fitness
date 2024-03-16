@@ -15,7 +15,7 @@ const fetchCuratedWorkout = async (req, res) => {
       messages: [
         {
           role: "system",
-          content: 'You are a helpful assistant designed generate a daily fitness routine based on age, gender, experience level, time, and workout focus. Provide your responses in JSON format like this { "workouts" :[{"name": "jumping jacks", "3 sets of 25 reps"}, {"name": "bench press", "instructions": "3 sets of 12 reps"}, ...]}'
+          content: 'You are a helpful assistant designed generate a daily fitness routine based on age, gender, experience level, time, and workout focus. Provide your responses in JSON format like this { "workouts" :[{"name": "lunge", "3 sets of 25 reps"}, {"name": "dumbbell row", "instructions": "3 sets of 12 reps"}, ...]}'
         },/*
         {
           role: "user",
@@ -34,12 +34,12 @@ const fetchCuratedWorkout = async (req, res) => {
     const aiWorkouts = JSON.parse(response.choices[0].message.content)["workouts"]
     console.log(aiWorkouts)
     const updatedAiWorkouts = await Promise.all(aiWorkouts.map(async aiWorkout => {
-      const workoutDetails = await Workout.findOne({ name: aiWorkout.name.toLowerCase() })
+      const workoutDetails = await Workout.findOne({ name:{ $regex: `${aiWorkout.name.substring(0, aiWorkout.name.length - 3).toLowerCase()}` }})
+
       return { ...aiWorkout, details: workoutDetails}
     }))
-    console.log(updatedAiWorkouts)
     res.status(200).json({
-      workout: response?.choices[0]?.message.content
+      workout: updatedAiWorkouts
     })
   } catch (error) {
     throw new Error(error)

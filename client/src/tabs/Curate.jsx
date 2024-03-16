@@ -2,6 +2,7 @@ import { Box, Button, FormControl, FormLabel, Radio, RadioGroup, Select, Slider,
 import { genderListSelect, focusListSelect, levelListSelectText } from '../data.js'
 import { useState } from 'react'
 import db from '../utils/db.js'
+import Workout from '../components/Workout.jsx'
 
 const initialValues = {
   time: 30,
@@ -24,9 +25,10 @@ const Curate = () => {
     try {
       setIsLoading(true)
       const response = await db.post("/ai", { values })
-      const responseJSON = JSON.parse(response.data.workout)
-      console.log(responseJSON["workouts"])
-      setCuratedWorkout(responseJSON.workouts)
+      //const responseJSON = JSON.parse(response.data.workout)
+      //console.log(responseJSON["workouts"])
+      setCuratedWorkout(response.data.workout)
+      console.log(response.data.workout)
     } catch (error) {
       console.log(error)
     } finally {
@@ -144,6 +146,7 @@ const Curate = () => {
             <Box key={index}>
               <Text fontWeight={700} textTransform="capitalize">{workout.name}</Text>
               <Text whiteSpace="break-spaces">{workout.instructions}</Text>
+              <Workout {...workout.details}/>
             </Box>
           )
         })}
