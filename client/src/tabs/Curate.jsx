@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormLabel, Radio, RadioGroup, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, TabPanel, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormLabel, Progress, Radio, RadioGroup, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, TabPanel, Text, VStack } from '@chakra-ui/react'
 import { genderListSelect, focusListSelect, levelListSelectText } from '../data.js'
 import { useState } from 'react'
 import db from '../utils/db.js'
@@ -28,7 +28,6 @@ const Curate = () => {
       //const responseJSON = JSON.parse(response.data.workout)
       //console.log(responseJSON["workouts"])
       setCuratedWorkout(response.data.workout)
-      console.log(response.data.workout)
     } catch (error) {
       console.log(error)
     } finally {
@@ -136,6 +135,8 @@ const Curate = () => {
           <Button type="submit">Create my Workout</Button>
         </VStack>
       </form>
+
+      <Progress size="xs" isIndeterminate={isLoading} marginTop={2}/>
 
 
       <Box display="flex" flexDirection="column" gap={5}>

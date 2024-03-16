@@ -18,7 +18,7 @@ const FindWorkouts = ({ onSetSearchFields, setResults, clear }) => {
             <Tab borderTopRadius="7px" fontWeight="700">Favorites</Tab>
             <Tab borderTopRadius="7px" fontWeight="700">Browse</Tab>
             <Tab borderTopRadius="7px" fontWeight="700">Search</Tab>
-            <Tab borderTopRadius="7px" fontWeight="700">Curate</Tab>
+            <Tab borderTopRadius="7px" fontWeight="700">AI Curate</Tab>
           </TabList>
 
           <Container>
