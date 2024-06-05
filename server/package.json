@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node --watch server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "build": "NODE_ENV=production node build",
+    "start": "NODE_ENV=production node server.js"
   },
   "keywords": [],
   "author": "",

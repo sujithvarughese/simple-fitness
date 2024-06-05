@@ -1,0 +1,14 @@
+{
+  "name": "simple-fitness",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "## About the App Simpler Fitness is an app that allows the user to find the perfect workout based on area of focus(chest, back, legs,  etc.), available equipment, and experience level. There is a search feature that allows the user to search any  exercise by name. The user starts typing in the search bar as the matching exercise names are generated, allowing  the user to select from the list. Also is a favorites section, unique to each user, where favorite exercises can be  stored. Favorites can be viewed all at once, or filtered by area of focus.",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd client && vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
