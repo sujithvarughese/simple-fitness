@@ -4,10 +4,10 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "node --watch server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production node build",
-    "start": "NODE_ENV=production node server.js"
+    "dev": "cd server && node --watch server.js",
+    "test": "cd server && echo \"Error: no test specified\" && exit 1",
+    "build": "cd server && npm run build",
+    "start": "cd server && node server.js"
   },
   "keywords": [],
   "author": "",
