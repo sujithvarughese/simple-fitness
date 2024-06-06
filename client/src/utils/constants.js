@@ -1,6 +1,6 @@
 const prod = {
 	url: {
-		API_URL: "https://simpler-fitness-api-2f86e824ee20.herokuapp.com/"
+		API_URL: "https://simpler-fitness-api-2f86e824ee20.herokuapp.com/api/v1"
 	}
 };
 
