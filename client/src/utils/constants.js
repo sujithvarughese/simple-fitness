@@ -1,6 +1,6 @@
 const prod = {
 	url: {
-		API_URL: import.meta.env.VITE_PROD_API
+		API_URL: "https://simpler-fitness-api-2f86e824ee20.herokuapp.com/"
 	}
 };
 
