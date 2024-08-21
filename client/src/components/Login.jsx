@@ -1,8 +1,27 @@
 import { useFormik } from "formik";
 import * as Yup from 'yup';
-import { Box, Button, Container, FormControl, FormErrorMessage, FormLabel, Heading, HStack, Input, InputGroup, Text, VStack } from '@chakra-ui/react'
+import {
+  Box,
+  Button, ButtonGroup,
+  Container,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  HStack,
+  Input,
+  InputGroup,
+  keyframes,
+  Text,
+  VStack
+} from '@chakra-ui/react'
 import { useGlobalContext } from '../context/GlobalContext.jsx'
 import { useState } from 'react'
+
+const credentials = {
+  email: import.meta.env.VITE_ADMIN_LOGIN,
+  password: import.meta.env.VITE_ADMIN_PASSWORD
+}
 
 const Login = () => {
 
@@ -30,6 +49,28 @@ const Login = () => {
       password: Yup.string().required("Required"),
     })
   });
+
+  const [guestLoginLoading, setGuestLoginLoading] = useState(false)
+
+  // function for Preview Site button click; Uses guest credentials to automatically log in
+  const previewAsGuest = async () => {
+    try {
+      setGuestLoginLoading(true)
+      await login(credentials)
+    } catch (error) {
+      throw new Error(error)
+    } finally {
+      setGuestLoginLoading(false)
+    }
+  }
+
+  const glow = keyframes`
+    0% { border: 2px black solid }
+    50% { border: 2px orange solid }
+    100% { border: 2px black solid }
+  `
+  const glowAnimation = `${glow} infinite 1.5s ease-in-out`
+
   return (
     <Box>
       <form onSubmit={formik.handleSubmit}>
@@ -63,12 +104,28 @@ const Login = () => {
             </VStack>
           </InputGroup>
 
-          <Button
-            type="submit"
-            isLoading={loginLoading}
-            size={{ base: "sm", md: "md"}}
-          >Log In
-          </Button>
+          <ButtonGroup
+            display="flex"
+            flexDir="column"
+            gap={1}
+            alignItems="flex-end"
+            justifyContent="center"
+          >
+            <Button
+              onClick={previewAsGuest}
+              isLoading={guestLoginLoading}
+              animation={glowAnimation}
+              size={{ base: "sm", md: "md"}}
+            >Demo
+            </Button>
+            <Button
+              type="submit"
+              isLoading={loginLoading}
+              size={{ base: "sm", md: "md"}}
+            >Log In
+            </Button>
+          </ButtonGroup>
+
         </HStack>
 
       </form>
