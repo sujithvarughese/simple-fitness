@@ -91,7 +91,7 @@ const Curate = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel htmlFor="gender">gender</FormLabel>
+            <FormLabel htmlFor="gender">Gender</FormLabel>
             <RadioGroup
               name="gender"
               value={values.gender}
